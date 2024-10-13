@@ -1,0 +1,5 @@
+Character controller heavily based off of Very Very Valet and COGITO ImSim character controller
+
+Programming and models by Ben Clites
+
+Credit for the original idea goes to Professor Justin Sledge

@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuslniubs5p25"]
+
+[ext_resource type="Script" path="res://Scripts/Player/player_controller.cs" id="1_o4d5i"]
+[ext_resource type="Script" path="res://Scripts/Player/StateManagerNfa.cs" id="2_6jbv7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bj8cu"]
+
+[node name="Player" type="Node3D" node_paths=PackedStringArray("CameraNode", "PlayerRoot", "GroundHeightRay")]
+script = ExtResource("1_o4d5i")
+Speed = 300.0
+JumpVelocity = 70.0
+CameraNode = NodePath("PlayerRigidbody/PlayerCam")
+PlayerRoot = NodePath("PlayerRigidbody")
+RotationSpeed = 0.2
+CameraActualRotationSpeed = 90.0
+BodyActualRotationSpeed = 0.2
+RootActualRotationSpeed = 90.0
+GroundHeightRay = NodePath("PlayerRigidbody/PlayerCollider/RayCastGrounded")
+SpringRideForce = 80.0
+gravity = 10.0
+LEFT = "move_left"
+RIGHT = "move_right"
+FORWARD = "move_forward"
+BACKWARD = "move_backward"
+
+[node name="PlayerRigidbody" type="RigidBody3D" parent="."]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+gravity_scale = 0.0
+continuous_cd = true
+
+[node name="PlayerCollider" type="CollisionShape3D" parent="PlayerRigidbody"]
+transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
+shape = SubResource("SphereShape3D_bj8cu")
+
+[node name="RayCastGrounded" type="RayCast3D" parent="PlayerRigidbody/PlayerCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.396505, 0)
+target_position = Vector3(0, -20, 0)
+
+[node name="PlayerCam" type="Camera3D" parent="PlayerRigidbody"]
+current = true
+
+[node name="StateManagerNFA" type="Node" parent="."]
+script = ExtResource("2_6jbv7")
