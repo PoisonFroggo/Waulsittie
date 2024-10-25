@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmwdmfgv2fu2y"]
+[gd_scene load_steps=3 format=3 uid="uid://dmwdmfgv2fu2y"]
 
 [ext_resource type="Texture2D" uid="uid://pgu82c10emg7" path="res://Assets/Images/Back.png" id="1_7dc11"]
+[ext_resource type="Script" path="res://Scripts/OptionsMenu.cs" id="1_d1ny7"]
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_d1ny7")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -21,7 +23,7 @@ layout_mode = 2
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+[node name="BackButton" type="TextureButton" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("1_7dc11")
 texture_pressed = ExtResource("1_7dc11")
@@ -46,3 +48,5 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 116
 text = "OpITOns XD"
 horizontal_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

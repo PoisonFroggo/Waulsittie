@@ -21,7 +21,7 @@ public partial class MainMenu : Control
 	private void _on_play_pressed() 
 	{
 		//GD.Print("Start Game");
-		GetTree().ChangeSceneToFile("res://scenes/WauldSitty.tscn");
+		GetTree().ChangeSceneToFile("res://scenes/player_setup.tscn");
 	}
 
 	private void _on_options_pressed() 

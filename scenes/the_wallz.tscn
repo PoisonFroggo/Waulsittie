@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdkujkkd0b7tm"]
+[gd_scene load_steps=8 format=3 uid="uid://bdkujkkd0b7tm"]
 
 [ext_resource type="PackedScene" uid="uid://nn7xgv76jgvl" path="res://Models/TheWallz.glb" id="1_gr0rh"]
 [ext_resource type="Texture2D" uid="uid://b6gq7t077msxa" path="res://Models/Grezz.png" id="2_s7lyu"]
@@ -6,7 +6,30 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ic6j4"]
 albedo_texture = ExtResource("2_s7lyu")
 
+[sub_resource type="Sky" id="Sky_4idl2"]
+
+[sub_resource type="Environment" id="Environment_mummx"]
+background_mode = 2
+background_color = Color(0, 0, 0.243137, 1)
+background_energy_multiplier = 1.2
+sky = SubResource("Sky_4idl2")
+ambient_light_color = Color(0, 0, 0.411765, 1)
+ambient_light_energy = 3.8
+reflected_light_source = 2
+tonemap_mode = 2
+glow_enabled = true
+glow_hdr_threshold = 2.15
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_py0un"]
+
+[sub_resource type="Compositor" id="Compositor_2f044"]
+
 [node name="TheWallz" instance=ExtResource("1_gr0rh")]
 
 [node name="Ground" parent="." index="1"]
 material_override = SubResource("StandardMaterial3D_ic6j4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="15"]
+environment = SubResource("Environment_mummx")
+camera_attributes = SubResource("CameraAttributesPhysical_py0un")
+compositor = SubResource("Compositor_2f044")
