@@ -28,15 +28,20 @@ using Godot;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
+//I had System.Numerics here at some point. I'd like to figure out why, but that is the reason why some vector3s have Godot.Vector3
+
 
 public partial class player_controller : Node3D
 {
 	
 	[Export] public float Speed {get; set;} = 900.0f;
 	[Export] public float JumpVelocity { get; set; }
-
-	[Export] public string IdleAnimationName { get; set; } //idle animation
-
+	[Export] public AnimationPlayer AnimationPlayer { get; set; }
+	[Export] public string KickAnimName { get; set; } //idle animation
+	[Export] public Skeleton3D Skel { get; set; } //player skeleton
+	[Export] public Node3D LeftLegLocation {get; set; } 
+	//The location to set the left leg when playing the kick animation so that the player can see the animation 
+	//(I could spawn a new leg at this location, but that looks less janky and silly)
 	[Export] public Node3D CameraNode { get; set; }
 	//Only needed if the player has a model
 	//[Export] public Node3D PlayerModel { get; set; }
@@ -45,7 +50,7 @@ public partial class player_controller : Node3D
 	[Export] public float CameraActualRotationSpeed { get; set; }
 	[Export] public float BodyActualRotationSpeed { get; set; }
 	[Export] public float RootActualRotationSpeed { get; set; }
-	[Export] public float VerticalRotationLimit { get; set; } = 90; //we want the player to be able to spin when in midair, so this may prove unnecessary in the future
+	[Export] public float VerticalRotationLimit { get; set; } = 90; //want the player to be able to spin when in midair, so this may prove unnecessary in the future
 
 	[Export] public RayCast3D GroundHeightRay { get; set;}
 	[Export] public float SpringRideForce { get; set; } = 30;
@@ -151,12 +156,41 @@ public partial class player_controller : Node3D
 	}
 
 		float dist = 0;
-		float rideHeight = 9;
+		float rideHeight = 4f;
 	public override void _PhysicsProcess(double delta)
 	{
+		if(Input.IsActionJustPressed("kick"))
+		//Regarding skeletons, local is relative to the Parent bone, and global is relative to the Skeleton itself.
+		{
+			
+			// Get the parent bone's global location (Vector3)
+			Vector3 hipOriginGlobalTransformReal = Skel.ToGlobal(Skel.GetBoneGlobalPose(44).Origin);
+			Vector3 leftLegLocationGlobal = LeftLegLocation.GlobalTransform.Origin;
+						
+			// Calculate the difference (offset) between the current bone position and the target position (LeftLegLocation)
+			Vector3 offset = leftLegLocationGlobal - hipOriginGlobalTransformReal;
+
+			// Now apply the offset to the bone's local position
+			Vector3 boneLocalTransform = Skel.ToLocal(Skel.GetBoneGlobalPose(44).Origin);
+			boneLocalTransform += offset; // Apply the offset to the bone's local transform
+
+			// Set the new local transform for the bone
+			Skel.SetBonePosePosition(44, boneLocalTransform);
+
+			GD.Print("LEFT LEG LOC " + LeftLegLocation.Transform.Origin);
+            // Play the specified animation
+            if (AnimationPlayer != null)
+            {
+                AnimationPlayer.Play(KickAnimName);
+            }
+            else
+            {
+                GD.PrintErr("AnimationPlayer is null. Cannot play animation.");
+			}
+		}
 		
-		Vector3 velocity = Velocity;				//local variable velocity equals the value of the universal variable Velocity. Exists for a just in case scenario
-		Vector3 downDir = new Vector3(0, -1, 0);    //local variable downDir equals a new 3D vector pointing down
+		Godot.Vector3 velocity = Velocity;				//local variable velocity equals the value of the universal variable Velocity. Exists for a just in case scenario
+		Vector3 downDir = new Godot.Vector3(0, -1, 0);    //local variable downDir equals a new 3D vector pointing down
 
 		/*
 	
@@ -167,10 +201,10 @@ public partial class player_controller : Node3D
 */		
 
 		float rayDirVel = downDir.Dot(velocity);
-		GD.Print("Velocity = " + velocity);
+		//GD.Print("Velocity = " + velocity);
 		
 		float x = dist - rideHeight; //displacement from the desired length
-		float springForce = (SpringRideForce * x);// - (rayDirVel);
+		float springForce = SpringRideForce * x;// - (rayDirVel);
 		switch (CurrentState)
 		{
 			case "Grounded":
@@ -181,14 +215,14 @@ public partial class player_controller : Node3D
 					//otherVel = otherObj.Velocity;
 					//GD.Print("Object hit = " + otherObj);
 					//GD.Print("rayDirVel = " + rayDirVel);
-					GD.Print("Current Height = " + dist);
-					GD.Print("Desired Height = " + rideHeight);
-					GD.Print("Difference in Current and Desired height = " + x);
-					GD.Print("Force to correct height = " + springForce);
+					//GD.Print("Current Height = " + dist);
+					//GD.Print("Desired Height = " + rideHeight);
+					//GD.Print("Difference in Current and Desired height = " + x);
+					//GD.Print("Force to correct height = " + springForce);
 
 					//GD.Print(collide_location);
 					Vector3 dY = new Vector3(0, -springForce, 0);
-					GD.Print("dY = " + dY);
+					//GD.Print("dY = " + dY);
 					// Handle Jump.
 					if (Input.IsActionJustPressed("jump")) {
 						Velocity.Y += JumpVelocity;
@@ -202,27 +236,27 @@ public partial class player_controller : Node3D
 				else {
 					CurrentState = "Midair";
 					}
-				GD.Print("Current state = " + CurrentState);
+				//GD.Print("Current state = " + CurrentState);
 			break;
 			/*-------------*/
 			case "Midair":
 				if (GroundHeightRay.IsColliding()) {
 					CurrentState = "Grounded";
 				}
-				GD.Print(gravity);
+				//GD.Print(gravity);
 				float z;
 				otherVel = new Vector3(0, 0, 0);
 				if (velocity.Y > -300) {
-					GD.Print("Gravity function working");
+					//GD.Print("Gravity function working");
 					velocity.Y -= gravity;
 				}
 				z = velocity.Y;
-				GD.Print("z = " + z);
+				//GD.Print("z = " + z);
 				Vector3 y = new Vector3(0, z, 0);
-				GD.Print("y = " + y);
+				//GD.Print("y = " + y);
 				PlayerRoot.ApplyCentralForce(y);
 
-				GD.Print("Current state = " + CurrentState);
+				//GD.Print("Current state = " + CurrentState);
 			break;
 		}
 		Velocity = velocity;
@@ -327,4 +361,21 @@ public partial class player_controller : Node3D
 	{
 
 	}
+
+	// Function to spawn a CSGSphere at a given transform position
+void SpawnCSGSphere(Vector3 position, string name)
+{
+    // Create the CSGSphere node
+    CsgSphere3D sphere = new CsgSphere3D();
+    sphere.Radius = 0.1f; // Set the sphere radius (you can adjust it as needed)
+    
+    // Set the position of the sphere
+    sphere.Transform = new Transform3D(new Basis(), position);
+    
+    // Optionally, set the name of the sphere for easier identification
+    sphere.Name = name;
+    
+    // Add the sphere as a child of the current node (or wherever you want it to be)
+    AddChild(sphere);
+}
 }

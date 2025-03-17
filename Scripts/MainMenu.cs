@@ -31,6 +31,6 @@ public partial class MainMenu : Control
 
 	private void _on_exit_pressed() 
 	{
-		GD.Print("Exit");
+		GetTree().Quit();
 	}
 }

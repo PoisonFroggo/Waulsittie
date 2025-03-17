@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbg7ajbjfv3qq"]
+
+[ext_resource type="PackedScene" uid="uid://b4hi825nq50q8" path="res://Models/mirror-circle.glb" id="1_bnv8s"]
+
+[node name="mirror-circle" instance=ExtResource("1_bnv8s")]

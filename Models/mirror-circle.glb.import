@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://nn7xgv76jgvl"
-path="res://.godot/imported/TheWallz.glb-1e16a97624cdd322460b4ad0ab40ed54.scn"
+uid="uid://b4hi825nq50q8"
+path="res://.godot/imported/mirror-circle.glb-8cfe5557f6b70fddd2aa471fa8cf216d.scn"
 
 [deps]
 
-source_file="res://Models/TheWallz.glb"
-dest_files=["res://.godot/imported/TheWallz.glb-1e16a97624cdd322460b4ad0ab40ed54.scn"]
+source_file="res://Models/mirror-circle.glb"
+dest_files=["res://.godot/imported/mirror-circle.glb-8cfe5557f6b70fddd2aa471fa8cf216d.scn"]
 
 [params]
 
