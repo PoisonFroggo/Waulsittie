@@ -1,5 +1,5 @@
 /*
-VVV hover template code
+Base hover template code
 
 if (_rayDidHit)
 {
@@ -26,11 +26,6 @@ if (_rayDidHit)
 
 using Godot;
 using System;
-using System.Diagnostics.CodeAnalysis;
-
-//I had System.Numerics here at some point. I'd like to figure out why, but that is the reason why some vector3s have Godot.Vector3
-
-
 public partial class player_controller : Node3D
 {
 	
@@ -39,9 +34,10 @@ public partial class player_controller : Node3D
 	[Export] public AnimationPlayer AnimationPlayer { get; set; }
 	[Export] public string KickAnimName { get; set; } //idle animation
 	[Export] public Skeleton3D Skel { get; set; } //player skeleton
-	[Export] public Node3D LeftLegLocation {get; set; } 
+	[Export] public Node3D LeftLegLocation { get; set; } 
 	//The location to set the left leg when playing the kick animation so that the player can see the animation 
 	//(I could spawn a new leg at this location, but that looks less janky and silly)
+
 	[Export] public Node3D CameraNode { get; set; }
 	//Only needed if the player has a model
 	//[Export] public Node3D PlayerModel { get; set; }
@@ -74,12 +70,14 @@ public partial class player_controller : Node3D
 
 
 	private float _rotationX = 0f;
-	private float _rotationY = 0f;
-	private float lookSensitivity = -.01f;
-
-	private float rideSpringDamper = 4;
+	private float _rotationY = 0f; 
+	[ExportGroup("Hover controls")]
+	[Export] float rideSpringDamper { get; set; } = 4f;
+	[Export] float rideHeight { get; set; } = 2f;
+		float dist = 0;
 
 	[ExportGroup("Controls")]
+	[Export] float lookSensitivity = -.01f;
 	[Export] string JUMP = "ui_accept";
 	[Export] string LEFT = "ui_left";
 	[Export] string RIGHT = "ui_right";
@@ -148,6 +146,12 @@ public partial class player_controller : Node3D
 	private string CurrentSubState = "Walk";
 
 	
+    // Add this signal for object collision
+    [Signal] public delegate void ObjectHitEventHandler(Vector3 hitPosition, Node3D hitObject);
+	
+    [Signal] public delegate void GroundedEventHandler(Vector3 hitPosition, Node3D hitObject);
+
+	
 	public override void _Ready()
 	{
 		//lock the mouse cursor
@@ -155,29 +159,11 @@ public partial class player_controller : Node3D
 		PlayerRoot.LinearDamp = LinearDamping;
 	}
 
-		float dist = 0;
-		float rideHeight = 4f;
 	public override void _PhysicsProcess(double delta)
 	{
 		if(Input.IsActionJustPressed("kick"))
 		//Regarding skeletons, local is relative to the Parent bone, and global is relative to the Skeleton itself.
 		{
-			
-			// Get the parent bone's global location (Vector3)
-			Vector3 hipOriginGlobalTransformReal = Skel.ToGlobal(Skel.GetBoneGlobalPose(44).Origin);
-			Vector3 leftLegLocationGlobal = LeftLegLocation.GlobalTransform.Origin;
-						
-			// Calculate the difference (offset) between the current bone position and the target position (LeftLegLocation)
-			Vector3 offset = leftLegLocationGlobal - hipOriginGlobalTransformReal;
-
-			// Now apply the offset to the bone's local position
-			Vector3 boneLocalTransform = Skel.ToLocal(Skel.GetBoneGlobalPose(44).Origin);
-			boneLocalTransform += offset; // Apply the offset to the bone's local transform
-
-			// Set the new local transform for the bone
-			Skel.SetBonePosePosition(44, boneLocalTransform);
-
-			GD.Print("LEFT LEG LOC " + LeftLegLocation.Transform.Origin);
             // Play the specified animation
             if (AnimationPlayer != null)
             {
@@ -204,7 +190,7 @@ public partial class player_controller : Node3D
 		//GD.Print("Velocity = " + velocity);
 		
 		float x = dist - rideHeight; //displacement from the desired length
-		float springForce = SpringRideForce * x;// - (rayDirVel);
+		float springForce = (SpringRideForce * x) - (rideSpringDamper * rayDirVel);
 		switch (CurrentState)
 		{
 			case "Grounded":
@@ -212,13 +198,13 @@ public partial class player_controller : Node3D
 					collide_location = GroundHeightRay.GetCollisionPoint();
 					dist = collide_location.DistanceTo(PlayerRoot.GlobalPosition);
 					otherObj = GroundHeightRay.GetCollider();
-					//otherVel = otherObj.Velocity;
-					//GD.Print("Object hit = " + otherObj);
-					//GD.Print("rayDirVel = " + rayDirVel);
-					//GD.Print("Current Height = " + dist);
-					//GD.Print("Desired Height = " + rideHeight);
-					//GD.Print("Difference in Current and Desired height = " + x);
-					//GD.Print("Force to correct height = " + springForce);
+
+					GD.Print("Object hit = " + otherObj);
+					GD.Print("rayDirVel = " + rayDirVel);
+					GD.Print("Current Height = " + dist);
+					GD.Print("Desired Height = " + rideHeight);
+					GD.Print("Difference in Current and Desired height = " + x);
+					GD.Print("Force to correct height = " + springForce);
 
 					//GD.Print(collide_location);
 					Vector3 dY = new Vector3(0, -springForce, 0);
@@ -362,20 +348,22 @@ public partial class player_controller : Node3D
 
 	}
 
-	// Function to spawn a CSGSphere at a given transform position
-void SpawnCSGSphere(Vector3 position, string name)
-{
-    // Create the CSGSphere node
-    CsgSphere3D sphere = new CsgSphere3D();
-    sphere.Radius = 0.1f; // Set the sphere radius (you can adjust it as needed)
-    
-    // Set the position of the sphere
-    sphere.Transform = new Transform3D(new Basis(), position);
-    
-    // Optionally, set the name of the sphere for easier identification
-    sphere.Name = name;
-    
-    // Add the sphere as a child of the current node (or wherever you want it to be)
-    AddChild(sphere);
-}
+
+private void MoveLeg() 
+	{		
+	// Get the parent bone's global location (Vector3)
+	Vector3 hipOriginGlobalTransformReal = Skel.ToGlobal(Skel.GetBoneGlobalPose(44).Origin);
+	Vector3 leftLegLocationGlobal = LeftLegLocation.GlobalTransform.Origin;						
+	// Calculate the difference (offset) between the current bone position and the target position (LeftLegLocation)
+	Vector3 offset = leftLegLocationGlobal - hipOriginGlobalTransformReal;
+
+	// Now apply the offset to the bone's local position
+	Vector3 boneLocalTransform = Skel.ToLocal(Skel.GetBoneGlobalPose(44).Origin);
+	boneLocalTransform += offset; // Apply the offset to the bone's local transform
+
+	// Set the new local transform for the bone
+	Skel.SetBonePosePosition(44, boneLocalTransform);
+
+	GD.Print("LEFT LEG LOC " + LeftLegLocation.Transform.Origin);
+	}
 }
