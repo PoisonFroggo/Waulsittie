@@ -15,6 +15,6 @@ public partial class PlayerSetup : Control
 
 	private void _on_btn_accept_pressed()
 	{
-		GetTree().ChangeSceneToFile("res://scenes/WauldSitty.tscn");
+		GetTree().ChangeSceneToFile("res://scenes/BrookingsDay1.tscn");
 	}
 }

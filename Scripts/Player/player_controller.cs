@@ -71,6 +71,10 @@ public partial class player_controller : Node3D
 
 	private float _rotationX = 0f;
 	private float _rotationY = 0f; 
+
+	[ExportGroup("Packed scenes")]
+	[Export] PackedScene pissOrb { get; set; }
+
 	[ExportGroup("Hover controls")]
 	[Export] float rideSpringDamper { get; set; } = 4f;
 	[Export] float rideHeight { get; set; } = 2f;
@@ -157,6 +161,8 @@ public partial class player_controller : Node3D
 		//lock the mouse cursor
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		PlayerRoot.LinearDamp = LinearDamping;
+
+		
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -173,6 +179,11 @@ public partial class player_controller : Node3D
             {
                 GD.PrintErr("AnimationPlayer is null. Cannot play animation.");
 			}
+		}
+
+		if(Input.IsActionJustPressed("piss")) 
+		{
+			SummonPissOrb();
 		}
 		
 		Godot.Vector3 velocity = Velocity;				//local variable velocity equals the value of the universal variable Velocity. Exists for a just in case scenario
@@ -365,5 +376,20 @@ private void MoveLeg()
 	Skel.SetBonePosePosition(44, boneLocalTransform);
 
 	GD.Print("LEFT LEG LOC " + LeftLegLocation.Transform.Origin);
+	}
+
+private void SummonPissOrb()
+	{
+        // Create a MeshInstance3D to hold the sphere
+        MeshInstance3D sphere = new MeshInstance3D();
+        
+        // Set the sphere mesh to a SphereMesh
+        sphere.Mesh = new SphereMesh();
+
+        // Set the position of the sphere to (0, 0, 0)
+        sphere.Transform = new Transform3D(Basis.Identity, new Vector3(1, 3, 1));
+
+        // Add the sphere to the scene tree as a child of this node
+        AddChild(sphere);
 	}
 }

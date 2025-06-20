@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=3 uid="uid://dor61yp2utvng"]
+
+[ext_resource type="Shader" uid="uid://dhgopj2j5e558" path="res://Shaders/piss_visual_shader.tres" id="1_1xop6"]
+[ext_resource type="Shader" path="res://Shaders/hatching.gdshader" id="2_ns16r"]
+[ext_resource type="Texture2D" uid="uid://pgu82c10emg7" path="res://Assets/Images/Back.png" id="3_gpw87"]
+[ext_resource type="Texture2D" uid="uid://muasqvoi8gtp" path="res://addons/barqueseclecticplugin/Icons/EclecticBtnIcon.jpg" id="4_rmw5v"]
+[ext_resource type="Texture2D" uid="uid://b6gq7t077msxa" path="res://Models/Grezz.png" id="5_4wn7n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_irgv1"]
+render_priority = 0
+shader = ExtResource("1_1xop6")
+shader_parameter/FloatParameter = 500.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_to5sh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q85g2"]
+render_priority = 0
+shader = ExtResource("2_ns16r")
+shader_parameter/_tint = Color(0.868985, 0.868985, 0.868985, 1)
+shader_parameter/_brightness = 0.235
+shader_parameter/_strokeColor = Color(0, 0, 0, 1)
+shader_parameter/_hatchTiling = 3.675
+shader_parameter/_hatchWeight = 0.064
+shader_parameter/_hatch0 = SubResource("NoiseTexture2D_to5sh")
+shader_parameter/_hatch1 = ExtResource("3_gpw87")
+shader_parameter/_hatch2 = ExtResource("3_gpw87")
+shader_parameter/_hatch3 = ExtResource("3_gpw87")
+shader_parameter/_hatch4 = ExtResource("4_rmw5v")
+shader_parameter/_hatch5 = ExtResource("5_4wn7n")
+
+[node name="PissOrb" type="Node3D"]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+radius = 0.179773
+material = SubResource("ShaderMaterial_irgv1")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0460577, 0.155053, -1.20025)
+material = SubResource("ShaderMaterial_q85g2")

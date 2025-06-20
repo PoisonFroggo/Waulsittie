@@ -2,22 +2,29 @@
 
 [ext_resource type="PackedScene" uid="uid://bdkujkkd0b7tm" path="res://scenes/the_wallz.tscn" id="1_xkpad"]
 [ext_resource type="PackedScene" uid="uid://cuslniubs5p25" path="res://scenes/player.tscn" id="2_fu2ih"]
-[ext_resource type="PackedScene" uid="uid://b4hi825nq50q8" path="res://Models/mirror-circle.glb" id="3_dag56"]
-[ext_resource type="PackedScene" uid="uid://x1iy4omlwa0l" path="res://scenes/door_1.tscn" id="4_pxnoh"]
+[ext_resource type="PackedScene" uid="uid://dor61yp2utvng" path="res://scenes/pissOrb.tscn" id="4_jrga8"]
+[ext_resource type="Script" path="res://addons/Mirror/Mirror/Mirror.gd" id="5_8r0a4"]
 
 [node name="Node3D" type="Node3D"]
 
 [node name="TheWallz" parent="." instance=ExtResource("1_xkpad")]
 
 [node name="Player" parent="." instance=ExtResource("2_fu2ih")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35.025, 0)
+transform = Transform3D(1.00004, 0, 0, 0, 1.00004, 0, 0, 0, 1.00004, 0, 35.025, 0)
+Speed = 150.0
 SpringRideForce = 70.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.608, 518.886, 0)
+light_color = Color(0.844212, 0.778936, 0.731091, 1)
 
-[node name="mirror-circle" parent="." instance=ExtResource("3_dag56")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.357, 21.8416, -78.715)
+[node name="Mirror" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 29.3728, -3.47129)
+script = ExtResource("5_8r0a4")
+size = Vector2(3, 3)
+ResolutionPerUnit = 300
+MainCamPath = NodePath("../Player/PlayerRigidbody/PlayerCam")
+MirrorColor = Color(0.835786, 0.614133, 0.339979, 1)
 
-[node name="door1" parent="." instance=ExtResource("4_pxnoh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.9478, -4.27204)
+[node name="Node3D" parent="." instance=ExtResource("4_jrga8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.207756, 30.0566, -0.409883)
