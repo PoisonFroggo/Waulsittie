@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://bdkujkkd0b7tm"]
 
 [ext_resource type="PackedScene" uid="uid://nn7xgv76jgvl" path="res://Models/TheWallz.glb" id="1_gr0rh"]
-[ext_resource type="Shader" path="res://Shaders/triplanar.gdshader" id="2_040f8"]
+[ext_resource type="Shader" uid="uid://bbw0qosrpi8sc" path="res://Shaders/triplanar.gdshader" id="2_040f8"]
 [ext_resource type="Texture2D" uid="uid://c0swyrpyv4y3u" path="res://Assets/Images/err-skull.png" id="3_7wtly"]
 [ext_resource type="Texture2D" uid="uid://pgu82c10emg7" path="res://Assets/Images/Back.png" id="4_y2xcm"]
 

@@ -1,11 +1,21 @@
-[gd_scene load_steps=14 format=3 uid="uid://cuslniubs5p25"]
+[gd_scene load_steps=13 format=3 uid="uid://cuslniubs5p25"]
 
-[ext_resource type="Script" path="res://Scripts/Player/player_controller.cs" id="1_o4d5i"]
-[ext_resource type="Script" path="res://Scripts/Player/StateManagerNfa.cs" id="2_6jbv7"]
+[ext_resource type="Script" uid="uid://bom5nge64vl5k" path="res://Scripts/Player/player_controller.cs" id="1_o4d5i"]
+[ext_resource type="Script" uid="uid://ccir6s850djl6" path="res://Scripts/Player/StateManagerNfa.cs" id="2_6jbv7"]
 [ext_resource type="PackedScene" uid="uid://bnxe6jqovussj" path="res://Models/vole-gigachad.glb" id="2_fqgps"]
 [ext_resource type="PackedScene" uid="uid://dor61yp2utvng" path="res://scenes/pissOrb.tscn" id="2_iiwsx"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_tuh5v"]
+line_spacing = 6.0
+font_size = 71
+outline_size = 32
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_kcngo"]
+viewport_path = NodePath("PlayerRigidbody/PlayerCam/FaceViewport")
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_bj8cu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dqkch"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2b33x"]
 sky_top_color = Color(0.187101, 0.230168, 0.290062, 1)
@@ -20,58 +30,12 @@ sky_material = SubResource("ProceduralSkyMaterial_2b33x")
 background_mode = 2
 sky = SubResource("Sky_8753q")
 
-[sub_resource type="Animation" id="Animation_2qk5f"]
-length = 0.001
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature/Skeleton3D/thigh_l")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Armature/Skeleton3D/calf_l")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+[sub_resource type="SphereShape3D" id="SphereShape3D_qlg0r"]
 
-[sub_resource type="Animation" id="Animation_8chb8"]
-resource_name = "kick"
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature/Skeleton3D/thigh_l")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0.045, 1)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Armature/Skeleton3D/calf_l")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_1fay3"]
-_data = {
-"RESET": SubResource("Animation_2qk5f"),
-"kick": SubResource("Animation_8chb8")
-}
-
-[sub_resource type="LabelSettings" id="LabelSettings_tuh5v"]
-line_spacing = 6.0
-font_size = 71
-outline_size = 32
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_kcngo"]
-viewport_path = NodePath("PlayerRigidbody/PlayerCam/FaceViewport")
-
-[node name="Player" type="Node3D" node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "PlayerRoot", "GroundHeightRay")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "PlayerRoot", "GroundHeightCast", "footCol")]
 script = ExtResource("1_o4d5i")
-Speed = 300.0
-JumpVelocity = 70.0
+Speed = 50.0
+JumpVelocity = 2500.0
 AnimationPlayer = NodePath("PlayerRigidbody/PlayerCam/vole-gigachad/AnimationPlayer")
 KickAnimName = "KickAnim"
 Skel = NodePath("PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D")
@@ -82,16 +46,47 @@ RotationSpeed = 0.2
 CameraActualRotationSpeed = 90.0
 BodyActualRotationSpeed = 0.2
 RootActualRotationSpeed = 90.0
-GroundHeightRay = NodePath("PlayerRigidbody/PlayerCollider/RayCastGrounded")
-SpringRideForce = 80.0
-gravity = 20.0
+GroundHeightCast = NodePath("PlayerRigidbody/PlayerCollider/ShapeCast3D")
+LinearDamping = 1.0
 pissOrb = ExtResource("2_iiwsx")
-rideSpringDamper = 0.7
-rideHeight = 3.0
+footCol = NodePath("PlayerRigidbody/PlayerCam/KickSphereCast")
 LEFT = "move_left"
 RIGHT = "move_right"
 FORWARD = "move_forward"
 BACKWARD = "move_backward"
+stopFactor = 10.0
+PissOrbScene = ExtResource("2_iiwsx")
+
+[node name="StateManagerNFA" type="Node" parent="."]
+script = ExtResource("2_6jbv7")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1151.0
+offset_bottom = 649.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 1142.0
+offset_bottom = 634.0
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "FUN GAME"
+label_settings = SubResource("LabelSettings_tuh5v")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Control/VBoxContainer"]
+position = Vector2(106, 545)
+scale = Vector2(1.75385, 1.37)
+texture = SubResource("ViewportTexture_kcngo")
+
+[node name="MoveEmpty" type="Node3D" parent="."]
 
 [node name="PlayerRigidbody" type="RigidBody3D" parent="."]
 axis_lock_angular_x = true
@@ -104,9 +99,9 @@ continuous_cd = true
 transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
 shape = SubResource("SphereShape3D_bj8cu")
 
-[node name="RayCastGrounded" type="RayCast3D" parent="PlayerRigidbody/PlayerCollider"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.396505, 0)
-target_position = Vector3(0, -6, 0)
+[node name="ShapeCast3D" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCollider"]
+transform = Transform3D(1, 0, 0, 0, 3.0361843, 0, 0, 0, 1, 0, 0.015919153, 0)
+shape = SubResource("CylinderShape3D_dqkch")
 
 [node name="PlayerCam" type="Camera3D" parent="PlayerRigidbody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.159845)
@@ -179,10 +174,10 @@ bones/40/rotation = Quaternion(0.345738, -0.005447, 0.0888638, 0.934098)
 bones/40/scale = Vector3(1, 1, 1)
 bones/41/rotation = Quaternion(-0.19997, -0.0250265, 0.0780737, 0.976366)
 bones/42/rotation = Quaternion(0.0268903, -0.00252559, -7.52932e-05, 0.999635)
-bones/43/position = Vector3(0.0637639, 1.15773, 0.327512)
-bones/44/rotation = Quaternion(0.861491, -0.0818143, 0.0834145, -0.494147)
+bones/43/position = Vector3(0.06376386, 1.1577305, 0.32751235)
+bones/44/rotation = Quaternion(0.86149114, -0.081814334, 0.08341453, -0.4941472)
 bones/44/scale = Vector3(1, 1, 1)
-bones/45/rotation = Quaternion(-0.00797253, 0.00108375, 0.0665872, 0.997748)
+bones/45/rotation = Quaternion(-0.007972531, 0.0010837541, 0.06658715, 0.99774826)
 bones/45/scale = Vector3(1, 1, 1)
 bones/46/rotation = Quaternion(0.09464, 0.0146022, -0.38585, 0.917578)
 bones/46/scale = Vector3(1, 1, 1)
@@ -205,7 +200,7 @@ bones/56/scale = Vector3(1, 1, 1)
 bones/57/rotation = Quaternion(-0.0171725, -0.0477776, -0.0916781, 0.994494)
 bones/57/scale = Vector3(1, 1, 1)
 bones/58/rotation = Quaternion(-0.266217, 0.00221076, 0.48708, 0.831791)
-bones/60/rotation = Quaternion(0.861491, 0.0818143, -0.0834145, -0.494147)
+bones/60/rotation = Quaternion(0.86149114, 0.081814334, -0.08341453, -0.4941472)
 bones/60/scale = Vector3(1, 1, 1)
 bones/61/rotation = Quaternion(-0.00797253, -0.00108369, -0.0665872, 0.997748)
 bones/61/scale = Vector3(1, 1, 1)
@@ -233,11 +228,6 @@ bones/73/scale = Vector3(1, 1, 1)
 [node name="AnimationPlayer" parent="PlayerRigidbody/PlayerCam/vole-gigachad" index="1"]
 speed_scale = 2.4
 
-[node name="@AnimationPlayer@31854" type="AnimationPlayer" parent="PlayerRigidbody/PlayerCam/vole-gigachad"]
-libraries = {
-"": SubResource("AnimationLibrary_1fay3")
-}
-
 [node name="FaceViewport" type="SubViewport" parent="PlayerRigidbody/PlayerCam"]
 handle_input_locally = false
 size = Vector2i(120, 150)
@@ -252,33 +242,9 @@ far = 102.03
 transform = Transform3D(-1, 0, 8.74228e-08, 6.71916e-09, 0.997042, 0.0768582, -8.71642e-08, 0.0768582, -0.997042, 0, -0.0289687, -0.26763)
 remote_path = NodePath("../FaceViewport/FaceCamera")
 
-[node name="StateManagerNFA" type="Node" parent="."]
-script = ExtResource("2_6jbv7")
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1151.0
-offset_bottom = 649.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
-layout_mode = 0
-offset_right = 1142.0
-offset_bottom = 634.0
-
-[node name="Label" type="Label" parent="Control/VBoxContainer"]
-layout_mode = 2
-text = "FUN GAME"
-label_settings = SubResource("LabelSettings_tuh5v")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSlider" type="HSlider" parent="Control/VBoxContainer"]
-layout_mode = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="Control/VBoxContainer"]
-position = Vector2(115, 580.5)
-scale = Vector2(1.75385, 1.37)
-texture = SubResource("ViewportTexture_kcngo")
+[node name="KickSphereCast" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCam"]
+transform = Transform3D(0.847, 0, 0, 0, -1.1071454e-07, -0.84, 0, 2.5328536, -3.6717562e-08, 0, -0.053731754, -0.73996544)
+shape = SubResource("SphereShape3D_qlg0r")
+target_position = Vector3(0, 0, 0)
 
 [editable path="PlayerRigidbody/PlayerCam/vole-gigachad"]

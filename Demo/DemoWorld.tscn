@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://0576fim4xnjw"]
 
-[ext_resource type="Script" path="res://Demo/MainCamera.gd" id="1"]
-[ext_resource type="Script" path="res://addons/Mirror/Mirror/Mirror.gd" id="2"]
+[ext_resource type="Script" uid="uid://qllpqc83tink" path="res://Demo/MainCamera.gd" id="1"]
+[ext_resource type="Script" uid="uid://bwcmilmgtpmk5" path="res://addons/Mirror/Mirror/Mirror.gd" id="2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_omm3q"]
 

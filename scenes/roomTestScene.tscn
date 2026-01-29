@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://g3ogby4moys5"]
+
+[ext_resource type="PackedScene" uid="uid://miaw6gtfnwyr" path="res://scenes/roomTest.tscn" id="1_y1sg5"]
+[ext_resource type="PackedScene" uid="uid://cuslniubs5p25" path="res://scenes/player.tscn" id="2_vpjpl"]
+[ext_resource type="PackedScene" uid="uid://csciut3hjqkc5" path="res://scenes/door_1_spider.tscn" id="3_01ra5"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="room" parent="." instance=ExtResource("1_y1sg5")]
+
+[node name="Player" parent="." instance=ExtResource("2_vpjpl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, -1)
+
+[node name="door1_spider" parent="." instance=ExtResource("3_01ra5")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.0145829, 0, 19.974297)

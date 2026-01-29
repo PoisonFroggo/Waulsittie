@@ -1,28 +1,3 @@
-/*
-VVV hover template code
-
-if (_rayDidHit)
-{
-	Vector3 vel = RB.velocity;
-	Rigidbody hitBody = _rayHit.rigidbody;
-	if (hitBody != null)
-	{
-		otherVel = hitBody.velocity;
-	}
-
-	float rayDirVel = Vector3.Dot(rayDir, vel;
-	float otherDirVel = Vector3.Dot(rayDir, otherVel);
-
-	float relVel = rayDirVel - otherDirVel;
-
-	float x = _rayHit.distance - RideHeight;
-
-	float springForce = (x * RideSpringStrength) - (relVel * RideSpringDamper);
-
-	_RB.AddForce(rayDir * springForce);
-}
-
-*/
 
 using Godot;
 using System;
@@ -35,7 +10,8 @@ public partial class mbns_player_controller : Node3D
 	[Export] public string IdleAnimationName { get; set; } //idle animation
 
 	[Export] public Node3D CameraNode { get; set; }
-	[Export] public RigidBody3D PlayerRoot { get; set; }
+	[Export] public Node3D PlayerRoot{ get; set; }
+	[Export] public RigidBody3D PlayerRigidBody { get; set; }
 	[Export] public float RotationSpeed { get; set; }
 	[Export] public float CameraActualRotationSpeed { get; set; }
 	[Export] public float BodyActualRotationSpeed { get; set; }
@@ -46,6 +22,8 @@ public partial class mbns_player_controller : Node3D
 	[Export] public float SpringRideForce { get; set; } = 30;
 	[Export] public float LinearDamping { get; set; } = 7;
 	[Export] public float gravity { get; set; } = 80;
+	[Export] public float rideSpringDamper { get; set; } = 6;
+	[Export] public CollisionShape3D footCol {get; set;}
 
 
 	private GodotObject otherObj;
@@ -67,7 +45,6 @@ public partial class mbns_player_controller : Node3D
 	private float _rotationY = 0f;
 	private float lookSensitivity = -.01f;
 
-	private float rideSpringDamper = 4;
 
 	[ExportGroup("Controls")]
 	[Export] string JUMP = "ui_accept";
@@ -98,6 +75,7 @@ public partial class mbns_player_controller : Node3D
 	[Export] bool pausing_enabled = true;
 	[Export] bool gravity_enabled = true;
 
+//Change to constantly apply force of gravity, only pushing up when grounded
 	private State currentState = State.Grounded;
 
 	public enum crouch_mode {
@@ -146,7 +124,7 @@ public partial class mbns_player_controller : Node3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 
 		//set linear damping
-		PlayerRoot.LinearDamp = LinearDamping;
+		PlayerRigidBody.LinearDamp = LinearDamping;
 
 		//Initialize cam rotations
 		camTargetRotation = Vector3.Zero;
@@ -178,13 +156,14 @@ public partial class mbns_player_controller : Node3D
 	{
 		Vector3 collideLocation = GroundHeightRay.GetCollisionPoint();
 		float distanceToGround = collideLocation.DistanceTo(PlayerRoot.GlobalPosition);
-		
-		// Spring force calculation
+
+			// Spring force calculation
+		Velocity.Y -= gravity * (float)delta;
 		float x = distanceToGround - rideHeight;  // Calculate compression/expansion
 		float springForce = x * SpringRideForce - rayDirVel * rideSpringDamper; // Basic spring force equation
 
 		// Apply spring force
-		PlayerRoot.ApplyCentralForce(downDir * springForce);
+		PlayerRigidBody.ApplyCentralForce(downDir * springForce);
 	}
 
 	// Apply gravity if in midair
@@ -272,7 +251,7 @@ public partial class mbns_player_controller : Node3D
 	}
 
 	private void ApplyMovement() {
-		PlayerRoot.ApplyCentralForce(Velocity);
+		PlayerRigidBody.ApplyCentralForce(Velocity);
 	}
 
 	private void UpdateCameraRotation(double delta) {

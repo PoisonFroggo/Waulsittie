@@ -53,9 +53,9 @@ operator = 9
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx;
 
-uniform float FloatParameter : hint_range(0, 1000) = 200;
+uniform float FloatParameter : hint_range(0.0, 1000.0) = 200.0;
 
 
 

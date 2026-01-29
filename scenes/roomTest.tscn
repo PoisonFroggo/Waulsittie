@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://miaw6gtfnwyr"]
+
+[ext_resource type="PackedScene" uid="uid://dkujitfaw8kux" path="res://Models/room.glb" id="1_kwg56"]
+
+[node name="room" instance=ExtResource("1_kwg56")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 35.66247, 0)
+light_energy = 10.56
+spot_range = 58.45633
+spot_angle = 43.522415

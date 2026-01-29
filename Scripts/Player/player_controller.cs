@@ -26,9 +26,13 @@ if (_rayDidHit)
 
 using Godot;
 using System;
+using PlayerFuncs;
 public partial class player_controller : Node3D
 {
-	
+	[ExportGroup("Height Spring")]
+	[Export] public float RideSpringStrength = 50f;
+
+	[ExportGroup("Misc")]
 	[Export] public float Speed {get; set;} = 900.0f;
 	[Export] public float JumpVelocity { get; set; }
 	[Export] public AnimationPlayer AnimationPlayer { get; set; }
@@ -48,10 +52,9 @@ public partial class player_controller : Node3D
 	[Export] public float RootActualRotationSpeed { get; set; }
 	[Export] public float VerticalRotationLimit { get; set; } = 90; //want the player to be able to spin when in midair, so this may prove unnecessary in the future
 
-	[Export] public RayCast3D GroundHeightRay { get; set;}
-	[Export] public float SpringRideForce { get; set; } = 30;
+	[Export] public ShapeCast3D GroundHeightCast {get; set;}
 	[Export] public float LinearDamping { get; set; } = 7;
-	[Export] public float gravity { get; set; } = 80;
+	[Export] public float GravityMultiplier { get; set; } = 4;
 
 	private GodotObject otherObj;
 
@@ -74,10 +77,11 @@ public partial class player_controller : Node3D
 
 	[ExportGroup("Packed scenes")]
 	[Export] PackedScene pissOrb { get; set; }
+	[Export] public ShapeCast3D footCol {get; set;}
 
 	[ExportGroup("Hover controls")]
-	[Export] float rideSpringDamper { get; set; } = 4f;
 	[Export] float rideHeight { get; set; } = 2f;
+	[Export] public float RideSpringDamper = 5f;
 		float dist = 0;
 
 	[ExportGroup("Controls")]
@@ -109,6 +113,16 @@ public partial class player_controller : Node3D
 	[Export] bool jump_animation = true;
 	[Export] bool pausing_enabled = true;
 	[Export] bool gravity_enabled = true;
+
+	[ExportGroup("Move settings")]
+	[Export] public float stopFactor = 5f;
+
+	[ExportGroup("URINATION PROCLAMATION")]
+	[Export] public PackedScene PissOrbScene { get; set; }
+	[Export] public float PissOrbLaunchForce { get; set; } = 20f;
+	[Export] public float PissOrbUpwardForce { get; set; } = 7f;
+
+	float dt;
 
 	public enum crouch_mode {
 		HoldCrouch,
@@ -146,8 +160,7 @@ public partial class player_controller : Node3D
 
 	
 	//Default states of the character on load
-	private string CurrentState = "Grounded";
-	private string CurrentSubState = "Walk";
+	private State CurrentState = State.Grounded;
 
 	
     // Add this signal for object collision
@@ -155,151 +168,39 @@ public partial class player_controller : Node3D
 	
     [Signal] public delegate void GroundedEventHandler(Vector3 hitPosition, Node3D hitObject);
 
-	
+	private Vector3 _gravity;
 	public override void _Ready()
 	{
+		GroundHeightCast.AddException(PlayerRoot);
+		footCol.AddException(PlayerRoot);
 		//lock the mouse cursor
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		PlayerRoot.LinearDamp = LinearDamping;
-
+		_gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle() * Vector3.Down;
 		
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if(Input.IsActionJustPressed("kick"))
-		//Regarding skeletons, local is relative to the Parent bone, and global is relative to the Skeleton itself.
-		{
-            // Play the specified animation
-            if (AnimationPlayer != null)
-            {
-                AnimationPlayer.Play(KickAnimName);
-            }
-            else
-            {
-                GD.PrintErr("AnimationPlayer is null. Cannot play animation.");
-			}
-		}
+		dt = (float)delta;
 
-		if(Input.IsActionJustPressed("piss")) 
-		{
-			SummonPissOrb();
-		}
-		
-		Godot.Vector3 velocity = Velocity;				//local variable velocity equals the value of the universal variable Velocity. Exists for a just in case scenario
-		Vector3 downDir = new Godot.Vector3(0, -1, 0);    //local variable downDir equals a new 3D vector pointing down
+		bool grounded = GroundHeightCast.IsColliding();
 
-		/*
-	
-	What follows is spring physics. Meaning the required calculation is
-	Fs = -k/\x
-	k is the determined spring constant, the force which is exerted per meter of stretch/compression
-	/\x is the distance the spring is stretched from its desired length
-*/		
+		//GD.Print(grounded);
 
-		float rayDirVel = downDir.Dot(velocity);
-		//GD.Print("Velocity = " + velocity);
-		
-		float x = dist - rideHeight; //displacement from the desired length
-		float springForce = (SpringRideForce * x) - (rideSpringDamper * rayDirVel);
 		switch (CurrentState)
 		{
-			case "Grounded":
-				if (GroundHeightRay.IsColliding()) {
-					collide_location = GroundHeightRay.GetCollisionPoint();
-					dist = collide_location.DistanceTo(PlayerRoot.GlobalPosition);
-					otherObj = GroundHeightRay.GetCollider();
-
-					GD.Print("Object hit = " + otherObj);
-					GD.Print("rayDirVel = " + rayDirVel);
-					GD.Print("Current Height = " + dist);
-					GD.Print("Desired Height = " + rideHeight);
-					GD.Print("Difference in Current and Desired height = " + x);
-					GD.Print("Force to correct height = " + springForce);
-
-					//GD.Print(collide_location);
-					Vector3 dY = new Vector3(0, -springForce, 0);
-					//GD.Print("dY = " + dY);
-					// Handle Jump.
-					if (Input.IsActionJustPressed("jump")) {
-						Velocity.Y += JumpVelocity;
-						float abs = springForce * JumpVelocity;
-						dY += new Vector3(0, Math.Abs(abs), 0);
-					}
-					//Make function to handle jump
-					PlayerRoot.ApplyCentralForce(dY);
-
-				}
-				else {
-					CurrentState = "Midair";
-					}
-				//GD.Print("Current state = " + CurrentState);
-			break;
-			/*-------------*/
-			case "Midair":
-				if (GroundHeightRay.IsColliding()) {
-					CurrentState = "Grounded";
-				}
-				//GD.Print(gravity);
-				float z;
-				otherVel = new Vector3(0, 0, 0);
-				if (velocity.Y > -300) {
-					//GD.Print("Gravity function working");
-					velocity.Y -= gravity;
-				}
-				z = velocity.Y;
-				//GD.Print("z = " + z);
-				Vector3 y = new Vector3(0, z, 0);
-				//GD.Print("y = " + y);
-				PlayerRoot.ApplyCentralForce(y);
-
-				//GD.Print("Current state = " + CurrentState);
-			break;
-		}
-		Velocity = velocity;
-
-		static void Jump() 
-		{
-			
+			case State.Grounded:
+				HandleGroundedState(grounded);
+				break;
+			case State.Midair:
+				HandleMidairState(grounded);
+				break;
 		}
 
-		
-		// Get the input direction and handle the movement/deceleration.
-		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
-		Vector3 direction = PlayerRoot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y);
-		if (direction != Vector3.Zero)
-		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
-		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
-		}
-		//GD.Print("Direction: " + direction);
-		//GD.Print("Transform Basis: " + Transform.Basis);
-		//GD.Print("X" + Transform.Basis.X + "Z" + Transform.Basis.Z + "Y" + Transform.Basis.Y);
-		//GD.Print(PlayerRoot.GlobalTransform.Basis);
-
-		PlayerRoot.ApplyCentralForce(velocity); //moves player
-
-		//use applycentralforce for rigidbody
-		//PlayerRoot.ApplyCentralForce(velocity);
-
-		Velocity = velocity;
-		//handle camera up/down (x) rotation
-		CameraNode.Rotation = new Vector3(
-			Mathf.LerpAngle(CameraNode.Rotation.X, Mathf.DegToRad(camTargetRotation.X), CameraActualRotationSpeed * (float)delta),
-			0,
-			0
-			);
-		//handle player side to side (y) rotation
-		PlayerRoot.Rotation = new Vector3(
-				0,
-				Mathf.LerpAngle(PlayerRoot.Rotation.Y, Mathf.DegToRad(rootTargetRotation.Y), RootActualRotationSpeed * (float)delta),
-				0
-			);
+		ImplementMovement();
+		ApplyGravity();
+		MoveCamera();
 	}
 		
 	public override void _Input(InputEvent @event)
@@ -321,7 +222,12 @@ public partial class player_controller : Node3D
 				Mathf.Wrap((-1 * mouseMotion.Relative.X * RotationSpeed) + rootTargetRotation.Y, 0, 360), 
 				0
 			);
-		
+		}
+
+		if (@event.IsActionPressed("jump"))
+		{
+			GD.Print("JUMPING");
+			HandleJump();
 		}
 
 		if (@event.IsActionPressed("escape")){
@@ -335,6 +241,98 @@ public partial class player_controller : Node3D
 		if (@event.IsActionPressed("secondary_fire")) {
 			
 		}
+
+		if (@event.IsActionPressed("kick"))
+		{
+			if (AnimationPlayer != null)
+			{
+				AnimationPlayer.Play(KickAnimName);
+			}
+			else
+			{
+				GD.PrintErr("AnimationPlayer is null. Cannot play animation.");
+			}
+			PlayerFuncs.PlayerFuncs.ProcessKickHits(
+				footCol,
+				PlayerRoot
+			);
+		//Regarding skeletons, local is relative to the Parent bone, and global is relative to the Skeleton itself.
+		}
+		if (@event.IsActionPressed("piss"))
+		{
+			SummonPissOrb();
+		}
+	}
+
+	private void HandleGroundedState(bool grounded)
+	{
+		//GD.Print("Starting grounded state");
+		if (!grounded)
+		{
+			CurrentState = State.Midair;
+			return;
+		}
+
+		if (!PlayerFuncs.PlayerFuncs.GetClosestHit(
+			GroundHeightCast,
+			out Vector3 hitPoint,
+			out RigidBody3D hitBody
+		))
+		{
+			return;
+		}
+
+		Vector3 downDir = Vector3.Down;
+		Vector3 toHit = hitPoint - PlayerRoot.GlobalPosition;
+		float dist = downDir.Dot(toHit);
+		Vector3 velocity = PlayerRoot.LinearVelocity;
+		Vector3 platformVelocity = Vector3.Zero;
+
+		//float dist = hitPoint.DistanceTo(PlayerRoot.GlobalPosition);
+		//GD.Print(hitPoint);
+		//GD.Print(PlayerRoot.GlobalPosition);
+
+		float rayDirVel = downDir.Dot(velocity);
+		float x = dist - rideHeight;
+		//GD.Print("dist: " + dist);
+		//GD.Print("rideHeight: " + rideHeight);
+		//GD.Print("x: " + x);
+
+		float springForce =
+			(x * RideSpringStrength) -
+			(rayDirVel * RideSpringDamper);
+
+		Vector3 force = Vector3.Down * springForce;
+		//GD.Print("Force: " + force);
+		
+		PlayerRoot.ApplyCentralForce(force);
+	}
+
+	private void HandleMidairState(bool grounded)
+	{
+		//GD.Print("Starting midair state");
+		if (grounded)
+		{
+			CurrentState = State.Grounded;
+			GD.Print("transition to grounded state");
+			return;
+		}
+	}
+
+	private bool CheckGrounded(bool rayHitGround, RayCast3D rayCast)
+	{
+		bool grounded;
+		Vector3 collideLoc = rayCast.GetCollisionPoint();
+		float collideDist = collideLoc.DistanceTo(PlayerRoot.GlobalPosition);
+		if (rayHitGround == true)
+		{
+			grounded = collideDist <= rideHeight * 1.3f;
+		}
+		else
+		{
+			grounded = false;
+		}
+		return grounded;
 	}
 
 	private void ToggleMouseMode()
@@ -351,14 +349,52 @@ public partial class player_controller : Node3D
 
 	private void ImplementMovement()
 	{
+		// Get the input direction and handle the movement/deceleration.
+		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
+		Vector3 direction = (PlayerRoot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+		Vector3 desiredVelocity = direction * Speed;
+		Vector3 currentVelocity = PlayerRoot.LinearVelocity;
+		Vector3 neededAccel = desiredVelocity - new Vector3(currentVelocity.X, 0, currentVelocity.Z);
+		Vector3 force = neededAccel * PlayerRoot.Mass;
+		if (inputDir == Vector2.Zero && GroundHeightCast.IsColliding() == true)
+		{
+			Vector3 horizontalVelocity = new Vector3(currentVelocity.X, 0, currentVelocity.Z);
+			Vector3 deceleration = -horizontalVelocity * stopFactor;
+			force = force + deceleration;
+		}
 
+		PlayerRoot.ApplyCentralForce(force); //moves player
 	}
 
-	private void enterState() //base state enter function
+	private void HandleJump()
 	{
-
+		if(GroundHeightCast.IsColliding() == true)
+		{
+			
+		PlayerRoot.ApplyCentralForce(new Vector3(0, JumpVelocity, 0));
+		}
 	}
 
+	private void MoveCamera()
+	{
+		//handle camera up/down (x) rotation
+		CameraNode.Rotation = new Vector3(
+			Mathf.LerpAngle(CameraNode.Rotation.X, Mathf.DegToRad(camTargetRotation.X), CameraActualRotationSpeed * (float)dt),
+			0,
+			0
+			);
+		//handle player side to side (y) rotation
+		PlayerRoot.Rotation = new Vector3(
+				0,
+				Mathf.LerpAngle(PlayerRoot.Rotation.Y, Mathf.DegToRad(rootTargetRotation.Y), RootActualRotationSpeed * (float)dt),
+				0
+			);
+	}
+
+	private void ApplyGravity()
+	{
+		PlayerRoot.ApplyCentralForce(_gravity * GravityMultiplier * PlayerRoot.Mass);
+	}
 
 private void MoveLeg() 
 	{		
@@ -375,21 +411,39 @@ private void MoveLeg()
 	// Set the new local transform for the bone
 	Skel.SetBonePosePosition(44, boneLocalTransform);
 
-	GD.Print("LEFT LEG LOC " + LeftLegLocation.Transform.Origin);
+	//GD.Print("LEFT LEG LOC " + LeftLegLocation.Transform.Origin);
 	}
 
 private void SummonPissOrb()
 	{
-        // Create a MeshInstance3D to hold the sphere
-        MeshInstance3D sphere = new MeshInstance3D();
-        
-        // Set the sphere mesh to a SphereMesh
-        sphere.Mesh = new SphereMesh();
+		if (PissOrbScene == null)
+			return;
 
-        // Set the position of the sphere to (0, 0, 0)
-        sphere.Transform = new Transform3D(Basis.Identity, new Vector3(1, 3, 1));
+		// Instantiate the projectile
+		RigidBody3D orb = PissOrbScene.Instantiate<RigidBody3D>();
 
-        // Add the sphere to the scene tree as a child of this node
-        AddChild(sphere);
+		// Spawn position (slightly in front of camera)
+		Vector3 spawnPosition =
+			CameraNode.GlobalTransform.Origin +
+			(-CameraNode.GlobalTransform.Basis.Z * 1.0f) +
+			(Vector3.Up * 0.3f);
+
+		orb.GlobalTransform = new Transform3D(
+			Basis.Identity,
+			spawnPosition
+		);
+
+		GetTree().CurrentScene.AddChild(orb);
+
+		// Forward direction (camera-facing)
+		Vector3 forwardDirection = -CameraNode.GlobalTransform.Basis.Z.Normalized();
+
+		// Launch impulse
+		Vector3 launchImpulse =
+			(forwardDirection * PissOrbLaunchForce) +
+			(Vector3.Up * PissOrbUpwardForce);
+
+		orb.ApplyCentralImpulse(launchImpulse);
 	}
+
 }

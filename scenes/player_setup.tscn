@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://g6ifrn1ra76w"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerSetup.cs" id="1_dd73a"]
+[ext_resource type="Script" uid="uid://dstyrwdlnlg7j" path="res://Scripts/PlayerSetup.cs" id="1_dd73a"]
 
 [node name="PlayerSetup" type="Control"]
 layout_mode = 3
@@ -36,6 +36,7 @@ layout_mode = 2
 autowrap_mode = 2
 item_count = 4
 popup/item_0/text = "Too hungy"
+popup/item_0/id = 0
 popup/item_1/text = "Not enough water"
 popup/item_1/id = 1
 popup/item_2/text = "Angry at neighbor"

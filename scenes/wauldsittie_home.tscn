@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://boicvone2l3og"]
+
+[ext_resource type="PackedScene" uid="uid://11nkrg1fh1t5" path="res://scenes/wauldsittie.tscn" id="2_cke28"]
+[ext_resource type="PackedScene" uid="uid://cuslniubs5p25" path="res://scenes/player.tscn" id="2_g087a"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("2_g087a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113802, 4.24165, 0.795276)
+Speed = 200.0
+
+[node name="wauldsittie" parent="." instance=ExtResource("2_cke28")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.996956, 0.0779719, 0, -0.0779719, 0.996956, 0, 12.4404, 0)

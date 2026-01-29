@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=3 uid="uid://cg0fkrspjwcxm"]
 
-[ext_resource type="Script" path="res://addons/gizmo/gizmo.gd" id="1_1spsu"]
-[ext_resource type="Script" path="res://addons/gizmo/gizmo_buttons.gd" id="2_84xk2"]
+[ext_resource type="Script" uid="uid://djmukkmfrauq0" path="res://addons/gizmo/gizmo.gd" id="1_1spsu"]
+[ext_resource type="Script" uid="uid://focuua86wevb" path="res://addons/gizmo/gizmo_buttons.gd" id="2_84xk2"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_qlinu"]
 radius = 0.1

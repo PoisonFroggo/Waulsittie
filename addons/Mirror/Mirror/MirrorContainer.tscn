@@ -1,6 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://b51uk2h1t8l33"]
-
-[ext_resource type="Material" uid="uid://cp471l6edt4ab" path="res://addons/Mirror/Mirror/MirrorMaterial.tres" id="1"]
+[gd_scene load_steps=2 format=3 uid="uid://b51uk2h1t8l33"]
 
 [sub_resource type="QuadMesh" id="11"]
 size = Vector2(2, 2)
@@ -26,4 +24,3 @@ transform = Transform3D(1, 0, 2.38419e-07, 0, 1, 0, -2.38419e-07, 0, 1, 0, 0, 0)
 layers = 4
 mesh = SubResource("11")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("1")
