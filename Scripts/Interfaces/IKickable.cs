@@ -7,6 +7,7 @@ public interface IKickable
         IKickable hitNode,
         Vector3 hitPoint,
         Vector3 hitNormal,
-        Node kicker
+        Vector3 rayHitPoint,
+        Node3D kicker
     );
 }

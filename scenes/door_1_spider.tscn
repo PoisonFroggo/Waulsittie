@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://csciut3hjqkc5"]
 
 [ext_resource type="PackedScene" uid="uid://dm4a43qv33ukq" path="res://Models/door1_spider.glb" id="1_jwo5g"]
-[ext_resource type="Script" uid="uid://cei8gakyhpu77" path="res://Scripts/DoorAnimatorLocked.cs" id="2_6h5vd"]
+[ext_resource type="Script" uid="uid://cei8gakyhpu77" path="res://Scripts/DoorScripts/DoorAnimatorLocked.cs" id="2_6h5vd"]
 
 [node name="door1_spider" instance=ExtResource("1_jwo5g")]
 script = ExtResource("2_6h5vd")

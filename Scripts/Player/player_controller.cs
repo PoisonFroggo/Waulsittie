@@ -27,6 +27,7 @@ if (_rayDidHit)
 using Godot;
 using System;
 using PlayerFuncs;
+using System.Runtime.CompilerServices;
 public partial class player_controller : Node3D
 {
 	[ExportGroup("Height Spring")]
@@ -43,6 +44,7 @@ public partial class player_controller : Node3D
 	//(I could spawn a new leg at this location, but that looks less janky and silly)
 
 	[Export] public Node3D CameraNode { get; set; }
+	[Export] public RayCast3D InteractRay { get; set; }
 	//Only needed if the player has a model
 	//[Export] public Node3D PlayerModel { get; set; }
 	[Export] public RigidBody3D PlayerRoot { get; set; }
@@ -254,7 +256,8 @@ public partial class player_controller : Node3D
 			}
 			PlayerFuncs.PlayerFuncs.ProcessKickHits(
 				footCol,
-				PlayerRoot
+				PlayerRoot,
+				InteractRay
 			);
 		//Regarding skeletons, local is relative to the Parent bone, and global is relative to the Skeleton itself.
 		}
@@ -276,6 +279,7 @@ public partial class player_controller : Node3D
 		if (!PlayerFuncs.PlayerFuncs.GetClosestHit(
 			GroundHeightCast,
 			out Vector3 hitPoint,
+			out Vector3 hitNorm,
 			out RigidBody3D hitBody
 		))
 		{
@@ -298,14 +302,22 @@ public partial class player_controller : Node3D
 		//GD.Print("rideHeight: " + rideHeight);
 		//GD.Print("x: " + x);
 
+
 		float springForce =
 			(x * RideSpringStrength) -
 			(rayDirVel * RideSpringDamper);
 
 		Vector3 force = Vector3.Down * springForce;
 		//GD.Print("Force: " + force);
-		
-		PlayerRoot.ApplyCentralForce(force);
+		float normY = hitNorm.Y;
+		float normX = hitNorm.X;
+		float normZ = hitNorm.Z;
+		//GD.Print(normY);
+
+		if(normY >= .1)
+		{
+			PlayerRoot.ApplyCentralForce(force);
+		}
 	}
 
 	private void HandleMidairState(bool grounded)

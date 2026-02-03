@@ -22,10 +22,12 @@ namespace PlayerFuncs
         public static bool GetClosestHit(
             ShapeCast3D shapeCast3D,
             out Vector3 hitPoint,
+            out Vector3 hitNorm,
             out RigidBody3D hitBody
         )
         {
             hitPoint = Vector3.Zero;
+            hitNorm = Vector3.Zero;
             hitBody = null;
 
             if (shapeCast3D == null || !shapeCast3D.IsColliding())
@@ -45,20 +47,25 @@ namespace PlayerFuncs
                     closestDistSq = distSq;
                     hitPoint = point;
                     hitBody = shapeCast3D.GetCollider(i) as RigidBody3D;
+                    hitNorm = shapeCast3D.GetCollisionNormal(i);
                 }
             }
             return true;
         }
+
+        
         public static void ProcessKickHits(
             ShapeCast3D shapeCast,
-            Node kicker
+            Node3D kicker,
+            RayCast3D interactRay
         )
         {
             GD.Print("Kick occured");
-            if (shapeCast == null)
+            if (shapeCast == null || interactRay == null)
                 return;
 
             shapeCast.ForceShapecastUpdate();
+            Vector3 intHitPoint = interactRay.GetCollisionPoint();
 
             int count = shapeCast.GetCollisionCount();
 
@@ -72,6 +79,7 @@ namespace PlayerFuncs
                         obj,
                         shapeCast.GetCollisionPoint(i),
                         shapeCast.GetCollisionNormal(i),
+                        intHitPoint,
                         kicker
                     );
                 }

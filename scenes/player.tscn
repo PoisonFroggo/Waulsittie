@@ -32,7 +32,7 @@ sky = SubResource("Sky_8753q")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qlg0r"]
 
-[node name="Player" type="Node3D" node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "PlayerRoot", "GroundHeightCast", "footCol")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "InteractRay", "PlayerRoot", "GroundHeightCast", "footCol")]
 script = ExtResource("1_o4d5i")
 Speed = 50.0
 JumpVelocity = 2500.0
@@ -41,6 +41,7 @@ KickAnimName = "KickAnim"
 Skel = NodePath("PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D")
 LeftLegLocation = NodePath("PlayerRigidbody/PlayerCam/SetLeg_L")
 CameraNode = NodePath("PlayerRigidbody/PlayerCam")
+InteractRay = NodePath("PlayerRigidbody/PlayerCam/InteractRay")
 PlayerRoot = NodePath("PlayerRigidbody")
 RotationSpeed = 0.2
 CameraActualRotationSpeed = 90.0
@@ -100,7 +101,7 @@ transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
 shape = SubResource("SphereShape3D_bj8cu")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCollider"]
-transform = Transform3D(1, 0, 0, 0, 3.0361843, 0, 0, 0, 1, 0, 0.015919153, 0)
+transform = Transform3D(1, 0, 0, 0, 3.0361843, 0, 0, 0, 1, 0, 0.54450005, 0)
 shape = SubResource("CylinderShape3D_dqkch")
 
 [node name="PlayerCam" type="Camera3D" parent="PlayerRigidbody"]
@@ -246,5 +247,9 @@ remote_path = NodePath("../FaceViewport/FaceCamera")
 transform = Transform3D(0.847, 0, 0, 0, -1.1071454e-07, -0.84, 0, 2.5328536, -3.6717562e-08, 0, -0.053731754, -0.73996544)
 shape = SubResource("SphereShape3D_qlg0r")
 target_position = Vector3(0, 0, 0)
+
+[node name="InteractRay" type="RayCast3D" parent="PlayerRigidbody/PlayerCam"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, -2, 0)
 
 [editable path="PlayerRigidbody/PlayerCam/vole-gigachad"]

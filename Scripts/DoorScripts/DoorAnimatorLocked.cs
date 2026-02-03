@@ -17,10 +17,11 @@ public partial class DoorAnimatorLocked : Node3D, IKickable
 		IKickable hitNode,
 		Vector3 hitPoint,
 		Vector3 hitNormal,
-		Node kicker
+		Vector3 interactHitPoint,
+		Node3D kicker
 	)
 	{
-		GD.Print("Door detected");
+		GD.Print("Locked door detected");
 		if (!anim.IsPlaying() && isLocked == false)
 		{
 			anim.Play("kick_open");

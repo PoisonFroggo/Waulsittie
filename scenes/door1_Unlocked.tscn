@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcmj4v7d1wfn"]
+
+[ext_resource type="PackedScene" uid="uid://clqp3pk55k5f7" path="res://Models/door1.glb" id="1_8dcu0"]
+[ext_resource type="Script" uid="uid://bwiqnvvbwcv1" path="res://Scripts/DoorScripts/DoorAnimatorUnlocked.cs" id="2_h8mmj"]
+[ext_resource type="Texture2D" uid="uid://2r7fdbq2okf7" path="res://Models/Texture/WoodenDoor.png" id="3_wfwmr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wgla2"]
+albedo_texture = ExtResource("3_wfwmr")
+
+[node name="door1" node_paths=PackedStringArray("RightHinge", "WrongHinge", "TopHinge", "BottomHinge", "rootPoint") instance=ExtResource("1_8dcu0")]
+script = ExtResource("2_h8mmj")
+RightHinge = NodePath("RootEmpty/BottomOpenHinge/WrongOpenHinge/RightOpenHinge")
+WrongHinge = NodePath("RootEmpty/BottomOpenHinge/WrongOpenHinge")
+TopHinge = NodePath("RootEmpty/BottomOpenHinge/WrongOpenHinge/RightOpenHinge/TopOpenHinge")
+BottomHinge = NodePath("RootEmpty/BottomOpenHinge")
+rootPoint = NodePath("RootEmpty")
+
+[node name="door" parent="RootEmpty/BottomOpenHinge/WrongOpenHinge/RightOpenHinge/TopOpenHinge" index="0"]
+material_override = SubResource("StandardMaterial3D_wgla2")
