@@ -3,6 +3,8 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 
+//This script allows for the player to open the door, currently only implemented as kicking. Eventually make helper functions that allow for breaking up a collider into chunks
+//and making different things happen based on what chunk has been kicked
 public partial class DoorAnimatorUnlocked : Node3D, IKickable
 {
 	[ExportGroup("Hinges")]
@@ -36,6 +38,8 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 	private int baseRotY = 0;
 	private float currentRotY = 0;
 
+	private float rightRotY;
+
 	//Step 1: get bounding box of the mesh (find and assign each side of the door)
 	//If interact ray is detected, use the hit location to decide what animation to run. otherwise always open using RightHinge
 
@@ -47,7 +51,9 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 
 		states = new Dictionary<DoorStates, DoorState>()
 		{
-			{DoorStates.Closed, new DoorClosedState(this) }
+			{DoorStates.Closed, new DoorClosedState(this)},
+			{DoorStates.OpenIn, new DoorOpenInState(this)},
+			{DoorStates.OpenOut, new DoorOpenOutState(this)}
 		};
 		ChangeState(DoorStates.Closed);
 	}
@@ -61,6 +67,15 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 		Node3D kicker
 	)
 	{
+		
+		currentState?.OnKicked(
+			hitNode,
+			hitPoint,
+			hitNormal,
+			interactHitPoint,
+			kicker
+		);
+		
 		if(kicker == null)
 		{
 			GD.PrintErr("Kicker is unrecognizable!");
@@ -68,17 +83,7 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 		Vector3 doorToPlayer = (kicker.GlobalTransform.Origin - rootPoint.GlobalTransform.Origin).Normalized();
 		float dot = doorForward.Dot(doorToPlayer);
 		GD.Print(dot);
-		RotateOnHinge();
-		OpenInOut(dot)
-	}
-
-
-	private void RotateOnHinge()
-	{
-		Vector3 p = rootPoint.GlobalTransform.Origin;
-		Vector3 c = RightHinge.GlobalTransform.Origin;
-		Vector3 newOrigin = p-c;
-
+		OpenInOut(dot);
 	}
 
 	public void ChangeState(DoorStates newState)
@@ -92,16 +97,28 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 	{
 		if(dot>0)
 		{
-			ChangeState(OpenIn)
+			ChangeState(DoorStates.OpenIn);
 		}
 		else if (dot < 0)
 		{
-			ChangeState(OpenOut)
+			ChangeState(DoorStates.OpenOut);
 		}
 		else
 		{
-			GD.Print("???")
+			GD.Print("???");
 		}
 	}
 
+	public void OpenInFunc()
+	{
+		GD.Print(RightHinge.Rotation.Y);
+		RightHinge.RotationDegrees += new Vector3(0, 90f, 0);
+		GD.Print(RightHinge.Rotation.Y);
+	}
+	public void OpenOutFunc()
+	{
+		GD.Print(RightHinge.Rotation.Y);
+		RightHinge.RotationDegrees -= new Vector3(0, 90f, 0);
+		GD.Print(RightHinge.Rotation.Y);
+	}
 }

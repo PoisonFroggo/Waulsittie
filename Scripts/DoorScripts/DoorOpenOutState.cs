@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public class DoorClosedState : DoorState
+public class DoorOpenOutState : DoorState
 {
     DoorAnimatorUnlocked door;
 
-    public DoorClosedState(DoorAnimatorUnlocked door) : base(door) {}
+    public DoorOpenOutState(DoorAnimatorUnlocked door) : base(door) {}
 
     public override void Enter()
     {
-        GD.Print("Door entered Closed state");
+        GD.Print("Door entered OpenOut state");
     }
     public virtual void Exit() {}
     public override void Update(double delta) 
@@ -23,6 +23,6 @@ public class DoorClosedState : DoorState
         Vector3 interactHitPoint,
 		Node3D kicker)
     {
-        //door.ChangeState(DoorAnimatorUnlocked.DoorStates.OpenIn);
+        door.OpenOutFunc();
     }
 }
