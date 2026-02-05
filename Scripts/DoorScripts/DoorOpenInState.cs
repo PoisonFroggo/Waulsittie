@@ -15,7 +15,10 @@ public class DoorOpenInState : DoorState
 		GD.Print("Door entered OpenIn state");
 		door.OpenInFunc();
 	}
-	public virtual void Exit() {}
+	public override void Exit()
+	{
+		door.ChangeState(DoorAnimatorUnlocked.DoorStates.Closed);
+	}
 	public override void Update(double delta) 
 	{
 		//transition to open state
@@ -29,5 +32,6 @@ public class DoorOpenInState : DoorState
 	{
 		//door.OpenInFunc();
 		GD.Print("OpenIn kick detected");
+		Exit();
 	}
 }
