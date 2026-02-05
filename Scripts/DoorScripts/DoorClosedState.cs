@@ -3,20 +3,20 @@ using System;
 
 public class DoorClosedState : DoorState
 {
-    DoorAnimatorUnlocked door;
 
     public DoorClosedState(DoorAnimatorUnlocked door) : base(door) {}
 
     public override void Enter()
     {
         GD.Print("Door entered Closed state");
+        PrintChildrenRecursive(door);
     }
-    public virtual void Exit() {}
+    public override void Exit() {}
     public override void Update(double delta) 
     {
         //transition to open state
     }
-    public virtual void OnKicked(
+    public override void OnKicked(
 		IKickable hitNode,
 		Vector3 hitPoint,
 		Vector3 hitNormal,
@@ -25,4 +25,13 @@ public class DoorClosedState : DoorState
     {
         //door.ChangeState(DoorAnimatorUnlocked.DoorStates.OpenIn);
     }
+
+    public static void PrintChildrenRecursive(Node node, string indent = "")
+{
+    foreach (Node child in node.GetChildren())
+    {
+        GD.Print($"{indent}{child.Name}");
+        PrintChildrenRecursive(child, indent + "  ");
+    }
+}
 }

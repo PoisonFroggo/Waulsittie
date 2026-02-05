@@ -3,7 +3,6 @@ using System;
 
 public class DoorOpenInState : DoorState
 {
-	DoorAnimatorUnlocked door;
 
 	public DoorOpenInState(DoorAnimatorUnlocked door) : base(door) 
 	{
