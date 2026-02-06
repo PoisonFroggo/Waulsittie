@@ -14,9 +14,8 @@ public class DoorOpenInState : DoorState
 		GD.Print("Door entered OpenIn state");
 		door.OpenInFunc();
 	}
-	public override void Exit()
+	public override void Exit()//Do not do implicit state changes through exit, exit is for cleaning up leftover data
 	{
-		door.ChangeState(DoorAnimatorUnlocked.DoorStates.Closed);
 	}
 	public override void Update(double delta) 
 	{
@@ -31,6 +30,6 @@ public class DoorOpenInState : DoorState
 	{
 		//door.OpenInFunc();
 		GD.Print("OpenIn kick detected");
-		Exit();
+		door.ChangeState(DoorAnimatorUnlocked.DoorStates.Closed);
 	}
 }
