@@ -3,6 +3,7 @@ using System;
 
 namespace PlayerFuncs
 {
+    //Helper functions for the player
     public static class PlayerFuncs
     {
                 public static T FindParentWith<T>(Node start) where T : class
@@ -19,8 +20,13 @@ namespace PlayerFuncs
 
             return null;
         }
-        public static bool GetClosestHit(
+        //This function should get only normals that are the correct amount up. If there are no normals detected that are facing up enough, the player slides down the slope.
+        //By comparing a maximum angle converted into a cosine (minDot) with the normals which are themselves added to the current pitch and roll of the player. This allows
+        //for the programmer to rotate the player so that a once flat surface is now a steep slope, causing the player to slide down the slope.
+        //Replace GetClosestHit with this
+        public static bool GetValidHits(
             ShapeCast3D shapeCast3D,
+            CollisionShape3D playerCol,
             out Vector3 hitPoint,
             out Vector3 hitNorm,
             out RigidBody3D hitBody
@@ -29,12 +35,36 @@ namespace PlayerFuncs
             hitPoint = Vector3.Zero;
             hitNorm = Vector3.Zero;
             hitBody = null;
+            float maxAngleDeg = 85;
+            float minDot = Mathf.Cos(Mathf.DegToRad(maxAngleDeg)); //Gets cosine of the maxAngle, compare this with the detected normals. If detected normals are too high, then they are disqualified from collision calculations.
+            Vector3 playerRot = new Vector3(playerCol.Rotation.X, 0f, playerCol.Rotation.Z); //The current pitch/roll rotation of the player
+            if (shapeCast3D == null || !shapeCast3D.IsColliding())
+                return false;
+            
+            int count = shapeCast3D.GetCollisionCount();
+            for(int i =0; i < count; i++) //for loop validates each collision point, checking if it is valid and adding it to a list. These will then be compared to each other and the one closest to the point of collision will be chosen as the 'main' collision point.
+            {
+                
+            }
+            return true;
+        }
+        public static bool GetClosestHit(
+            ShapeCast3D shapeCast3D,
+            out Vector3 hitPoint,
+            out Vector3 hitNorm,
+            out RigidBody3D hitBody
+        )
+        {
+            CollisionShape3D playerCol = shapeCast3D.GetParent<CollisionShape3D>();
+            hitPoint = Vector3.Zero;
+            hitNorm = Vector3.Zero;
+            hitBody = null;
 
             if (shapeCast3D == null || !shapeCast3D.IsColliding())
                 return false;
             
             float closestDistSq = float.MaxValue;
-            Vector3 origin = shapeCast3D.GlobalTransform.Origin;
+            Vector3 origin = playerCol.GlobalTransform.Origin;
 
             int count = shapeCast3D.GetCollisionCount();
             for (int i = 0; i < count; i++)

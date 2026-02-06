@@ -308,11 +308,11 @@ public partial class player_controller : Node3D
 			(rayDirVel * RideSpringDamper);
 
 		Vector3 force = Vector3.Down * springForce;
-		//GD.Print("Force: " + force);
+		GD.Print("Force: " + force);
 		float normY = hitNorm.Y;
 		float normX = hitNorm.X;
 		float normZ = hitNorm.Z;
-		//GD.Print(normY);
+		GD.Print(normY);
 
 		if(normY >= .1)
 		{
@@ -322,7 +322,7 @@ public partial class player_controller : Node3D
 
 	private void HandleMidairState(bool grounded)
 	{
-		//GD.Print("Starting midair state");
+		GD.Print("Starting midair state");
 		if (grounded)
 		{
 			CurrentState = State.Grounded;

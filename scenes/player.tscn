@@ -35,7 +35,7 @@ sky = SubResource("Sky_8753q")
 [node name="Player" type="Node3D" node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "InteractRay", "PlayerRoot", "GroundHeightCast", "footCol")]
 script = ExtResource("1_o4d5i")
 Speed = 50.0
-JumpVelocity = 2500.0
+JumpVelocity = 1500.0
 AnimationPlayer = NodePath("PlayerRigidbody/PlayerCam/vole-gigachad/AnimationPlayer")
 KickAnimName = "KickAnim"
 Skel = NodePath("PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D")
@@ -101,7 +101,7 @@ transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
 shape = SubResource("SphereShape3D_bj8cu")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCollider"]
-transform = Transform3D(1, 0, 0, 0, 3.0361843, 0, 0, 0, 1, 0, 0.54450005, 0)
+transform = Transform3D(1, 0, 0, 0, 3.0361843, 0, 0, 0, 1, 0, 0.92533714, 0)
 shape = SubResource("CylinderShape3D_dqkch")
 
 [node name="PlayerCam" type="Camera3D" parent="PlayerRigidbody"]
