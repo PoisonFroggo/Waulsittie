@@ -267,6 +267,10 @@ public partial class player_controller : Node3D
 		}
 	}
 
+		Vector3 xxx;
+		Vector3 xi;
+		RigidBody3D xx;
+		CollisionShape3D xxi;
 	private void HandleGroundedState(bool grounded)
 	{
 		//GD.Print("Starting grounded state");
@@ -285,6 +289,13 @@ public partial class player_controller : Node3D
 		{
 			return;
 		}
+		PlayerFuncs.PlayerFuncs.GetValidHits(
+			GroundHeightCast,
+			xxi,
+			out xxx,
+			out xi,
+			out xx
+		);
 
 		Vector3 downDir = Vector3.Down;
 		Vector3 toHit = hitPoint - PlayerRoot.GlobalPosition;
@@ -308,11 +319,11 @@ public partial class player_controller : Node3D
 			(rayDirVel * RideSpringDamper);
 
 		Vector3 force = Vector3.Down * springForce;
-		GD.Print("Force: " + force);
+		//GD.Print("Force: " + force);
 		float normY = hitNorm.Y;
 		float normX = hitNorm.X;
 		float normZ = hitNorm.Z;
-		GD.Print(normY);
+		//GD.Print(normY);
 
 		if(normY >= .1)
 		{

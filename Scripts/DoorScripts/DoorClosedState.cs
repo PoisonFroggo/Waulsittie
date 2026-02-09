@@ -5,11 +5,14 @@ public class DoorClosedState : DoorState
 {
 
     public DoorClosedState(DoorAnimatorUnlocked door) : base(door) {}
+    public Node3D rootNode;
 
     public override void Enter()
     {
+        rootNode = door.GetNode<Node3D>("RootEmpty");
         GD.Print("Door entered Closed state");
         PrintChildrenRecursive(door);
+        GD.Print("Root Node. " + rootNode);
     }
     public override void Exit() {}
     public override void Update(double delta) 
