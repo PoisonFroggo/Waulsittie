@@ -83,7 +83,6 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 		Vector3 doorToPlayer = (kicker.GlobalTransform.Origin - rootPoint.GlobalTransform.Origin).Normalized();
 		float dot = doorForward.Dot(doorToPlayer);
 		GD.Print(dot);
-		if(currentState == Closed)
 		OpenInOut(dot);
 	}
 
