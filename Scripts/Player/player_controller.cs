@@ -80,6 +80,10 @@ public partial class player_controller : Node3D
 	[ExportGroup("Packed scenes")]
 	[Export] PackedScene pissOrb { get; set; }
 	[Export] public ShapeCast3D footCol {get; set;}
+	[Export] public CollisionShape3D chestCol {get; set;}
+	[Export] public CollisionShape3D headCol {get; set;}
+	[Export] public CollisionShape3D bicepRCol {get; set;}
+	[Export] public CollisionShape3D bicepLCol {get; set;}
 
 	[ExportGroup("Hover controls")]
 	[Export] float rideHeight { get; set; } = 2f;
@@ -179,7 +183,7 @@ public partial class player_controller : Node3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		PlayerRoot.LinearDamp = LinearDamping;
 		_gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle() * Vector3.Down;
-		
+		//AddExceptionsRecursive(PlayerRoot, GroundHeightCast);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -289,13 +293,13 @@ public partial class player_controller : Node3D
 		{
 			return;
 		}
-		PlayerFuncs.PlayerFuncs.GetValidHits(
+		/*PlayerFuncs.PlayerFuncs.GetValidHits(
 			GroundHeightCast,
 			xxi,
 			out xxx,
 			out xi,
 			out xx
-		);
+		);*/
 
 		Vector3 downDir = Vector3.Down;
 		Vector3 toHit = hitPoint - PlayerRoot.GlobalPosition;
@@ -333,11 +337,11 @@ public partial class player_controller : Node3D
 
 	private void HandleMidairState(bool grounded)
 	{
-		GD.Print("Starting midair state");
+		//GD.Print("Starting midair state");
 		if (grounded)
 		{
 			CurrentState = State.Grounded;
-			GD.Print("transition to grounded state");
+			//GD.Print("transition to grounded state");
 			return;
 		}
 	}
@@ -467,6 +471,21 @@ private void SummonPissOrb()
 			(Vector3.Up * PissOrbUpwardForce);
 
 		orb.ApplyCentralImpulse(launchImpulse);
+	}
+
+		void AddExceptionsRecursive(Node node, ShapeCast3D cast)
+	{
+		if (node is CollisionObject3D col)
+		{
+			cast.AddException(col);
+			GD.Print("col is " + col.Name);
+		}
+
+		foreach (Node n in node.GetChildren())
+		{
+			AddExceptionsRecursive(n, cast);
+			GD.Print(n.Name + " removed");
+		}
 	}
 
 }

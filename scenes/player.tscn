@@ -115,30 +115,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.116387, -0.263202)
 [node name="vole-gigachad" parent="PlayerRigidbody/PlayerCam" instance=ExtResource("2_fqgps")]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, -1.65606, 0.159845)
 
-[node name="Skeleton3D" parent="PlayerRigidbody/PlayerCam/vole-gigachad/Armature" index="0"]
-bones/55/position = Vector3(-4.7153897e-08, 0.91213524, 7.456668e-09)
-bones/56/rotation = Quaternion(0.86149114, -0.08181433, 0.08341453, -0.49414724)
-bones/57/rotation = Quaternion(-0.007972531, 0.0010837541, 0.06658715, 0.99774826)
-bones/75/rotation = Quaternion(0.86149114, 0.08181433, -0.08341453, -0.49414724)
-
-[node name="footR_colonly" parent="PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D" index="12"]
-transform = Transform3D(0.99999994, -2.9802322e-07, 1.5459955e-07, 1.7881393e-07, 0.9999996, -5.3085387e-08, -7.636845e-08, 2.3283064e-07, 0.99999964, 8.940697e-08, 1.4901161e-07, -3.7252903e-08)
-
-[node name="calfR_colonly" parent="PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D" index="13"]
-transform = Transform3D(0.9999998, -1.2665987e-07, -1.0523945e-07, 9.685755e-08, 0.9999995, -1.0733493e-07, 1.7136335e-07, 1.9461731e-07, 0.9999997, 1.6391277e-07, 2.9802322e-07, -4.4703484e-08)
-
-[node name="thighR_colonly" parent="PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D" index="14"]
-transform = Transform3D(0.99999976, -7.4505806e-08, -2.3283064e-09, 5.9604645e-08, 0.9999999, -1.0622898e-07, 2.3748726e-08, 1.5867408e-07, 0.9999998, 7.4505806e-08, 1.1920929e-07, -2.0489097e-08)
-
-[node name="footL_colonly" parent="PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D" index="15"]
-transform = Transform3D(0.9999997, 1.1920929e-07, -2.4214387e-08, -2.9802322e-08, 0.99999964, -9.313226e-10, 6.891787e-08, 2.561137e-07, 0.99999976, -1.6391277e-07, 1.4901161e-07, -6.7055225e-08)
-
-[node name="calfL_colonly" parent="PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D" index="16"]
-transform = Transform3D(0.9999997, 1.0430813e-07, -2.6542693e-08, -9.685755e-08, 0.9999999, -1.223234e-07, -3.7951395e-08, 2.165034e-07, 0.99999994, -1.1920929e-07, 5.9604645e-08, -7.7299774e-08)
-
-[node name="thighl_colonly" parent="PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D" index="17"]
-transform = Transform3D(0.99999976, 8.940697e-08, 3.7252903e-09, -8.940697e-08, 0.99999976, -9.505311e-08, -2.2351742e-08, 1.5128171e-07, 0.9999998, -1.0430813e-07, 1.7881393e-07, -5.029142e-08)
-
 [node name="AnimationPlayer" parent="PlayerRigidbody/PlayerCam/vole-gigachad" index="1"]
 speed_scale = 2.4
 

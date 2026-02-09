@@ -24,7 +24,7 @@ namespace PlayerFuncs
 		//By comparing a maximum angle converted into a cosine (minDot) with the normals which are themselves added to the current pitch and roll of the player. This allows
 		//for the programmer to rotate the player so that a once flat surface is now a steep slope, causing the player to slide down the slope.
 		//Replace GetClosestHit with this
-		public static bool GetValidHits(
+		/*public static bool GetValidHits(
 			ShapeCast3D shapeCast3D,
 			CollisionShape3D playerCol,
 			out Vector3 hitPoint,
@@ -47,7 +47,7 @@ namespace PlayerFuncs
 				
 			}
 			return true;
-		}
+		}*/
 		public static bool GetClosestHit(
 			ShapeCast3D shapeCast3D,
 			out Vector3 hitPoint,
@@ -70,6 +70,8 @@ namespace PlayerFuncs
 			for (int i = 0; i < count; i++)
 			{
 				Vector3 point = shapeCast3D.GetCollisionPoint(i);
+				var cx = shapeCast3D.GetCollider(i);
+				GD.Print("Hit " + ((Node)cx).Name);
 				float distSq = origin.DistanceSquaredTo(point);
 
 				if (distSq < closestDistSq)
