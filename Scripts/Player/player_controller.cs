@@ -80,10 +80,6 @@ public partial class player_controller : Node3D
 	[ExportGroup("Packed scenes")]
 	[Export] PackedScene pissOrb { get; set; }
 	[Export] public ShapeCast3D footCol {get; set;}
-	[Export] public CollisionShape3D chestCol {get; set;}
-	[Export] public CollisionShape3D headCol {get; set;}
-	[Export] public CollisionShape3D bicepRCol {get; set;}
-	[Export] public CollisionShape3D bicepLCol {get; set;}
 
 	[ExportGroup("Hover controls")]
 	[Export] float rideHeight { get; set; } = 2f;
