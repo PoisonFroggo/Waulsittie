@@ -376,7 +376,7 @@ public partial class player_controller : Node3D
 
 	private void ImplementMovement()
 	{
-		// Get the input direction and handle the movement/deceleration.
+		// Get the input direction and handle the movement/deceleration
 		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
 		Vector3 direction = (PlayerRoot.Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 		Vector3 desiredVelocity = direction * Speed;
