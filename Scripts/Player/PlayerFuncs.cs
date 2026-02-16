@@ -71,7 +71,7 @@ namespace PlayerFuncs
 			{
 				Vector3 point = shapeCast3D.GetCollisionPoint(i);
 				var cx = shapeCast3D.GetCollider(i);
-				GD.Print("Hit " + ((Node)cx).Name);
+				//GD.Print("Hit " + ((Node)cx).Name);
 				float distSq = origin.DistanceSquaredTo(point);
 
 				if (distSq < closestDistSq)

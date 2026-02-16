@@ -3,7 +3,7 @@ using System;
 
 public class DoorClosedState : DoorState
 {
-
+    public bool closed = true;
     public DoorClosedState(DoorAnimatorUnlocked door) : base(door) {}
     public Node3D rootNode;
 
@@ -13,6 +13,8 @@ public class DoorClosedState : DoorState
         GD.Print("Door entered Closed state");
         PrintChildrenRecursive(door);
         GD.Print("Root Node. " + rootNode);
+        closed != closed;
+        GD.Print(closed);
     }
     public override void Exit() {}
     public override void Update(double delta) 
