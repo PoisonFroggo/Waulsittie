@@ -80,10 +80,10 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 		{
 			GD.PrintErr("Kicker is unrecognizable!");
 		}
-		Vector3 doorToPlayer = (kicker.GlobalTransform.Origin - rootPoint.GlobalTransform.Origin).Normalized();
-		float dot = doorForward.Dot(doorToPlayer);
-		GD.Print(dot);
-		OpenInOut(dot);
+		//Vector3 doorToPlayer = (kicker.GlobalTransform.Origin - rootPoint.GlobalTransform.Origin).Normalized();
+		//float dot = doorForward.Dot(doorToPlayer);
+		//GD.Print(dot);
+		//OpenInOut(dot);
 	}
 
 	public void ChangeState(DoorStates newState)
@@ -95,7 +95,8 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 
 	public void OpenInOut(float dot)
 	{
-		if(dot>0)
+		GD.Print("OpenInOut func dot: " + dot);
+		if(dot > 0)
 		{
 			ChangeState(DoorStates.OpenIn);
 		}
