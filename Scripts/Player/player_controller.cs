@@ -165,10 +165,10 @@ public partial class player_controller : Node3D
 	private State CurrentState = State.Grounded;
 
 	
-    // Add this signal for object collision
-    [Signal] public delegate void ObjectHitEventHandler(Vector3 hitPosition, Node3D hitObject);
+	// Add this signal for object collision
+	[Signal] public delegate void ObjectHitEventHandler(Vector3 hitPosition, Node3D hitObject);
 	
-    [Signal] public delegate void GroundedEventHandler(Vector3 hitPosition, Node3D hitObject);
+	[Signal] public delegate void GroundedEventHandler(Vector3 hitPosition, Node3D hitObject);
 
 	private Vector3 _gravity;
 	public override void _Ready()
@@ -233,6 +233,7 @@ public partial class player_controller : Node3D
 		}
 
 		if (@event.IsActionPressed("escape")){
+			
 			ToggleMouseMode();
 		}
 

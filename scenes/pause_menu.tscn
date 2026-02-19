@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dkrd6fkwxmdhj"]
+
+[ext_resource type="Script" uid="uid://cvstpbnl8xenh" path="res://Scripts/PauseMenu.cs" id="1_n87rw"]
+
+[node name="PauseMenu" type="Control" unique_id=567900410]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n87rw")
+
+[node name="ButtonOrg" type="VBoxContainer" parent="." unique_id=1839782762]
+visible = false
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 648.0
+theme_override_constants/separation = 150
+
+[node name="Button" type="Button" parent="ButtonOrg" unique_id=1890584045]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Resume"
+
+[node name="Button2" type="Button" parent="ButtonOrg" unique_id=1547447278]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Options"
+
+[node name="Button3" type="Button" parent="ButtonOrg" unique_id=1076120179]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="ButtonOrg/Button" to="." method="_on_resume"]
+[connection signal="pressed" from="ButtonOrg/Button3" to="." method="_on_exit"]
