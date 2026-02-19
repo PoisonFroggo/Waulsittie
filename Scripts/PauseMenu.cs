@@ -6,13 +6,13 @@ public partial class PauseMenu : Node
 	
 	private void _on_pause() {
 		Input.MouseMode = Input.MouseModeEnum.Visible;
-		//GetNode<VBoxContainer>("ButtonOrg").Visible=true;
+		GetNode<VBoxContainer>("ButtonOrg").Visible=true;
 		GetTree().Paused = true;
 	}
 	
 	private void _on_resume() {
 		Input.MouseMode =Input.MouseModeEnum.Captured;
-		//GetNode<VBoxContainer>("ButtonOrg").Visible=false;
+		GetNode<VBoxContainer>("ButtonOrg").Visible=false;
 		GetTree().Paused = false;
 	}
 	
