@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://g3ogby4moys5"]
+[gd_scene load_steps=9 format=3 uid="uid://g3ogby4moys5"]
 
 [ext_resource type="PackedScene" uid="uid://miaw6gtfnwyr" path="res://scenes/roomTest.tscn" id="1_y1sg5"]
 [ext_resource type="PackedScene" uid="uid://cuslniubs5p25" path="res://scenes/player.tscn" id="2_vpjpl"]
 [ext_resource type="PackedScene" uid="uid://csciut3hjqkc5" path="res://scenes/door_1_spider.tscn" id="3_01ra5"]
 [ext_resource type="PackedScene" uid="uid://bcmj4v7d1wfn" path="res://scenes/door1_Unlocked.tscn" id="4_01ra5"]
 [ext_resource type="PackedScene" uid="uid://cbyt5tp3aaej8" path="res://scenes/door1_Knobfall.tscn" id="5_ruwck"]
+[ext_resource type="PackedScene" uid="uid://brru31f43ef0d" path="res://scenes/LethalWaterBottle.tscn" id="6_ruwck"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_or50k"]
 data = PackedVector3Array(-1, -0.9, 1, -1, 1, -1, -1, -0.9, -1, -1, -0.9, 1, -1, 1, 1, -1, 1, -1, 0, -0.9, -1, 1, 1, -1, 1, -0.9, -1, 0, -0.9, -1, 0, 1, -1, 1, 1, -1, 1, -0.9, -1, 1, 1, 1, 1, -0.9, 1, 1, -0.9, -1, 1, 1, -1, 1, 1, 1, -0.049999982, -0.9, 1, -1, 1, 1, -1, -0.9, 1, -0.049999982, -0.9, 1, -0.049999982, 1, 1, -1, 1, 1, 0, -1, -1, 1, -1, 1, 0, -1, 1, 0, -1, -1, 1, -1, -1, 1, -1, 1, -0.049999982, 1, -1, -1, 1, 1, -0.049999982, 1, 1, -0.049999982, 1, -1, -1, 1, -1, -1, 1, 1, 1, 1, -1, 0, 1, 1, 1, 1, 1, 1, 1, -1, 0, 1, -1, 0, 1, 1, -0.049999982, -1, -1, 0, -1, 1, -0.049999982, -1, 1, -0.049999982, -1, -1, 0, -1, -1, 0, -1, 1, 1, -0.9, 1, 0, 1, 1, 0, -0.9, 1, 1, -0.9, 1, 1, 1, 1, 0, 1, 1, -0.049999982, -0.9, -1, 0, 1, -1, 0, -0.9, -1, -0.049999982, -0.9, -1, -0.049999982, 1, -1, 0, 1, -1, -0.049999982, -1, -1, 0, -0.9, -1, 0, -1, -1, -0.049999982, -1, -1, -0.049999982, -0.9, -1, 0, -0.9, -1, 1, -1, 1, 0, -0.9, 1, 0, -1, 1, 1, -1, 1, 1, -0.9, 1, 0, -0.9, 1, -0.049999982, -1, 1, -1, -0.9, 1, -1, -1, 1, -0.049999982, -1, 1, -0.049999982, -0.9, 1, -1, -0.9, 1, 1, -1, -1, 1, -0.9, 1, 1, -1, 1, 1, -1, -1, 1, -0.9, -1, 1, -0.9, 1, 0, -1, -1, 1, -0.9, -1, 1, -1, -1, 0, -1, -1, 0, -0.9, -1, 1, -0.9, -1, -1, -1, 1, -1, -0.9, -1, -1, -1, -1, -1, -1, 1, -1, -0.9, 1, -1, -0.9, -1, -1, -1, -1, -0.049999982, -0.9, -1, -0.049999982, -1, -1, -1, -1, -1, -1, -0.9, -1, -0.049999982, -0.9, -1, -1, -0.9, -1, -0.049999982, 1, -1, -0.049999982, -0.9, -1, -1, -0.9, -1, -1, 1, -1, -0.049999982, 1, -1, -1, -1, -1, -0.049999982, -1, 1, -1, -1, 1, -1, -1, -1, -0.049999982, -1, -1, -0.049999982, -1, 1, 0, 1, -1, -0.049999982, 1, 1, 0, 1, 1, 0, 1, -1, -0.049999982, 1, -1, -0.049999982, 1, 1, 0, -0.9, 1, -0.049999982, 1, 1, -0.049999982, -0.9, 1, 0, -0.9, 1, 0, 1, 1, -0.049999982, 1, 1)
@@ -33,5 +34,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6018515, 0, 6.6405582)
 
 [node name="door2" parent="." instance=ExtResource("5_ruwck")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.174324, 0, 6.4322615)
+
+[node name="LethalWaterBottle" parent="." instance=ExtResource("6_ruwck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5203233, 0.106444694, -4.789408)
+
+[node name="LethalWaterBottle2" parent="." instance=ExtResource("6_ruwck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5505431, 0.33019838, -4.830425)
 
 [editable path="room"]

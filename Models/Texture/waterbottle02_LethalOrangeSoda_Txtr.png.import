@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnxvun334wdoy"
-path.s3tc="res://.godot/imported/door1_knobtxtr.png-b848f34341013945d06b9f3932125e0a.s3tc.ctex"
+uid="uid://yrmtf11wsc5l"
+path.s3tc="res://.godot/imported/waterbottle02_LethalOrangeSoda_Txtr.png-37ba7db9b6895ceef43719dfed8a7e6c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "fa8b75753c23df2a872c741db9475cc8"
+"md5": "e9af92fc50b55b0e1b2d6ac8512945a5"
 }
 
 [deps]
 
-source_file="res://Models/door1_knobtxtr.png"
-dest_files=["res://.godot/imported/door1_knobtxtr.png-b848f34341013945d06b9f3932125e0a.s3tc.ctex"]
+source_file="res://Models/Texture/waterbottle02_LethalOrangeSoda_Txtr.png"
+dest_files=["res://.godot/imported/waterbottle02_LethalOrangeSoda_Txtr.png-37ba7db9b6895ceef43719dfed8a7e6c.s3tc.ctex"]
 
 [params]
 

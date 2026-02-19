@@ -3,7 +3,7 @@ using System;
 
 public class DoorClosedState : DoorState
 {
-    public bool closed = true;
+    public bool closed = false;
     public DoorClosedState(DoorAnimatorUnlocked door) : base(door) 
     {
         this.door = door;
