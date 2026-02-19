@@ -21,7 +21,7 @@ project/assembly_name="Waulsittie"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Mirror/plugin.cfg", "res://addons/gizmo/plugin.cfg")
+enabled=PackedStringArray("res://addons/gizmo/plugin.cfg")
 
 [input]
 
