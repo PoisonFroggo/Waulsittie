@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://binjecropjhm4"]
+
+[ext_resource type="PackedScene" uid="uid://c2ye2xmawhh54" path="res://Models/waterbottle02.glb" id="1_xlhvw"]
+
+[node name="waterbottle02" instance=ExtResource("1_xlhvw")]

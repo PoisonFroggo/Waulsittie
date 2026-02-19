@@ -2,20 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddx8t7fsnrapw"
-path.s3tc="res://.godot/imported/door1_dropknobs_knobtxtr.png-f7e3b48afab408bc3a2e60edb5136710.s3tc.ctex"
+uid="uid://51508y523jw7"
+path.s3tc="res://.godot/imported/TheWallz_Grezz.png-de409adce577f5a515bd45590642c0bc.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "fa8b75753c23df2a872c741db9475cc8"
-}
+generator_parameters={}
 
 [deps]
 
-source_file="res://Models/door1_dropknobs_knobtxtr.png"
-dest_files=["res://.godot/imported/door1_dropknobs_knobtxtr.png-f7e3b48afab408bc3a2e60edb5136710.s3tc.ctex"]
+source_file="res://Models/Texture/TheWallz_Grezz.png"
+dest_files=["res://.godot/imported/TheWallz_Grezz.png-de409adce577f5a515bd45590642c0bc.s3tc.ctex"]
 
 [params]
 

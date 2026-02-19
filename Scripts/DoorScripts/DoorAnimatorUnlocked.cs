@@ -112,14 +112,14 @@ public partial class DoorAnimatorUnlocked : Node3D, IKickable
 
 	public void OpenInFunc()
 	{
-		GD.Print(RightHinge.Rotation.Y);
-		RightHinge.RotationDegrees += new Vector3(0, -90f, 0);
-		GD.Print(RightHinge.Rotation.Y);
+		GD.Print("before OpenIn Hinge rot = " + RightHinge.Rotation.Y);
+		RightHinge.RotationDegrees -= new Vector3(0, 90f, 0);
+		GD.Print("OpenIn Hinge rot = " + RightHinge.Rotation.Y);
 	}
 	public void OpenOutFunc()
 	{
-		GD.Print(RightHinge.Rotation.Y);
-		RightHinge.RotationDegrees -= new Vector3(0, 90f, 0);
-		GD.Print(RightHinge.Rotation.Y);
+		GD.Print("before OpenOut Hinge rot = " + RightHinge.Rotation.Y);
+		RightHinge.RotationDegrees += new Vector3(0, 90f, 0);
+		GD.Print("OpenOut Hinge rot = " + RightHinge.Rotation.Y);
 	}
 }

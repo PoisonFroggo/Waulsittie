@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://siw8c2vvwpni"
-path.s3tc="res://.godot/imported/vole-gigachad_Skintexture.png-9386ed63ea7e6bc3046634e4a1cbcfc2.s3tc.ctex"
+uid="uid://ddx8t7fsnrapw"
+path.s3tc="res://.godot/imported/door1_dropknobs_knobtxtr.png-66ab0487222767d15401c918626f484a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "d5712aee297b26f59d262a071ee220c8"
+"md5": "fa8b75753c23df2a872c741db9475cc8"
 }
 
 [deps]
 
-source_file="res://Models/vole-gigachad_Skintexture.png"
-dest_files=["res://.godot/imported/vole-gigachad_Skintexture.png-9386ed63ea7e6bc3046634e4a1cbcfc2.s3tc.ctex"]
+source_file="res://Models/Texture/door1_dropknobs_knobtxtr.png"
+dest_files=["res://.godot/imported/door1_dropknobs_knobtxtr.png-66ab0487222767d15401c918626f484a.s3tc.ctex"]
 
 [params]
 
