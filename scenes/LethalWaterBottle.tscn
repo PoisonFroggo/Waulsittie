@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://brru31f43ef0d"]
+[gd_scene load_steps=4 format=3 uid="uid://brru31f43ef0d"]
 
+[ext_resource type="Script" uid="uid://cbsjgfwwnq07p" path="res://Scripts/Kickables/LethalWaterBottle.cs" id="1_3708e"]
 [ext_resource type="PackedScene" uid="uid://binjecropjhm4" path="res://scenes/WotrBotl.tscn" id="1_xlhvw"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3708e"]
@@ -7,6 +8,7 @@ height = 0.21090698
 radius = 0.034179688
 
 [node name="LethalWaterBottle" type="Node3D"]
+script = ExtResource("1_3708e")
 
 [node name="LethalWaterBottle_rb" type="RigidBody3D" parent="."]
 

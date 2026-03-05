@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cuslniubs5p25"]
+[gd_scene load_steps=14 format=3 uid="uid://cuslniubs5p25"]
 
 [ext_resource type="Script" uid="uid://bom5nge64vl5k" path="res://Scripts/Player/player_controller.cs" id="1_o4d5i"]
 [ext_resource type="Script" uid="uid://ccir6s850djl6" path="res://Scripts/Player/StateManagerNfa.cs" id="2_6jbv7"]
@@ -33,7 +33,7 @@ sky = SubResource("Sky_8753q")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qlg0r"]
 
-[node name="Player" type="Node3D" unique_id=598891141 node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "InteractRay", "PlayerRoot", "GroundHeightCast", "footCol")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "InteractRay", "PlayerRoot", "GroundHeightCast", "footCol")]
 process_mode = 1
 script = ExtResource("1_o4d5i")
 Speed = 50.0
@@ -60,92 +60,92 @@ BACKWARD = "move_backward"
 stopFactor = 10.0
 PissOrbScene = ExtResource("2_iiwsx")
 
-[node name="StateManagerNFA" type="Node" parent="." unique_id=1654078130]
+[node name="StateManagerNFA" type="Node" parent="."]
 script = ExtResource("2_6jbv7")
 
-[node name="Control" type="Control" parent="." unique_id=1050504379]
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1151.0
 offset_bottom = 649.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=46112998]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 0
 offset_right = 1142.0
 offset_bottom = 634.0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=160563560]
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "FUN GAME"
 label_settings = SubResource("LabelSettings_tuh5v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="Control/VBoxContainer" unique_id=291750761]
+[node name="HSlider" type="HSlider" parent="Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Control/VBoxContainer" unique_id=1314265213]
+[node name="Sprite2D" type="Sprite2D" parent="Control/VBoxContainer"]
 position = Vector2(106, 545)
 scale = Vector2(1.75385, 1.37)
 texture = SubResource("ViewportTexture_kcngo")
 
-[node name="MoveEmpty" type="Node3D" parent="." unique_id=2087238190]
+[node name="MoveEmpty" type="Node3D" parent="."]
 
-[node name="PlayerRigidbody" type="RigidBody3D" parent="." unique_id=1903720641]
+[node name="PlayerRigidbody" type="RigidBody3D" parent="."]
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 gravity_scale = 0.0
 continuous_cd = true
 
-[node name="PlayerCollider" type="CollisionShape3D" parent="PlayerRigidbody" unique_id=321590921]
+[node name="PlayerCollider" type="CollisionShape3D" parent="PlayerRigidbody"]
 transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
 shape = SubResource("SphereShape3D_bj8cu")
 
-[node name="ShapeCast3D" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCollider" unique_id=1573245997]
+[node name="ShapeCast3D" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCollider"]
 transform = Transform3D(1, 0, 0, 0, 3.0361843, 0, 0, 0, 1, 0, 0.92533714, 0)
 shape = SubResource("CylinderShape3D_dqkch")
 
-[node name="PlayerCam" type="Camera3D" parent="PlayerRigidbody" unique_id=1492021409]
+[node name="PlayerCam" type="Camera3D" parent="PlayerRigidbody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.159845)
 environment = SubResource("Environment_l44xi")
 current = true
 
-[node name="SetLeg_L" type="Node3D" parent="PlayerRigidbody/PlayerCam" unique_id=1620980668]
+[node name="SetLeg_L" type="Node3D" parent="PlayerRigidbody/PlayerCam"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.116387, -0.263202)
 
-[node name="vole-gigachad" parent="PlayerRigidbody/PlayerCam" unique_id=520689676 instance=ExtResource("2_fqgps")]
+[node name="vole-gigachad" parent="PlayerRigidbody/PlayerCam" instance=ExtResource("2_fqgps")]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, -1.65606, 0.159845)
 
-[node name="AnimationPlayer" parent="PlayerRigidbody/PlayerCam/vole-gigachad" index="1" unique_id=986311045]
+[node name="AnimationPlayer" parent="PlayerRigidbody/PlayerCam/vole-gigachad" index="1"]
 speed_scale = 2.4
 
-[node name="FaceViewport" type="SubViewport" parent="PlayerRigidbody/PlayerCam" unique_id=1111772507]
+[node name="FaceViewport" type="SubViewport" parent="PlayerRigidbody/PlayerCam"]
 handle_input_locally = false
 size = Vector2i(120, 150)
 
-[node name="FaceCamera" type="Camera3D" parent="PlayerRigidbody/PlayerCam/FaceViewport" unique_id=1480403512]
+[node name="FaceCamera" type="Camera3D" parent="PlayerRigidbody/PlayerCam/FaceViewport"]
 transform = Transform3D(-1, 0, 8.74228e-08, 6.71916e-09, 0.997042, 0.0768582, -8.71642e-08, 0.0768582, -0.997042, 0, -0.0289687, -0.427475)
 fov = 59.1196
 near = 0.005
 far = 102.03
 
-[node name="FaceCamMover" type="RemoteTransform3D" parent="PlayerRigidbody/PlayerCam" unique_id=233587880]
+[node name="FaceCamMover" type="RemoteTransform3D" parent="PlayerRigidbody/PlayerCam"]
 transform = Transform3D(-1, 0, 8.74228e-08, 6.71916e-09, 0.997042, 0.0768582, -8.71642e-08, 0.0768582, -0.997042, 0, -0.0289687, -0.26763)
 remote_path = NodePath("../FaceViewport/FaceCamera")
 
-[node name="KickSphereCast" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCam" unique_id=540599578]
+[node name="KickSphereCast" type="ShapeCast3D" parent="PlayerRigidbody/PlayerCam"]
 transform = Transform3D(0.847, 0, 0, 0, -1.1071454e-07, -0.84, 0, 2.5328536, -3.6717562e-08, 0, -0.053731754, -0.73996544)
 shape = SubResource("SphereShape3D_qlg0r")
 target_position = Vector3(0, 0, 0)
 
-[node name="InteractRay" type="RayCast3D" parent="PlayerRigidbody/PlayerCam" unique_id=228288949]
+[node name="InteractRay" type="RayCast3D" parent="PlayerRigidbody/PlayerCam"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 target_position = Vector3(0, -2, 0)
 
-[node name="PauseMenu" parent="." unique_id=567900410 instance=ExtResource("5_qlg0r")]
-
 [node name="Node3D" type="Node3D" parent="PlayerRigidbody/PlayerCam/InteractRay"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.67368716, 0.115223795)
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_qlg0r")]
 
 [editable path="PlayerRigidbody/PlayerCam/vole-gigachad"]

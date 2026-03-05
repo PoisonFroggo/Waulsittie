@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dkrd6fkwxmdhj"]
+[gd_scene load_steps=0 format=3 uid="uid://dkrd6fkwxmdhj"]
 
 [ext_resource type="Script" uid="uid://cvstpbnl8xenh" path="res://Scripts/PauseMenu.cs" id="1_n87rw"]
 

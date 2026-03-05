@@ -304,15 +304,16 @@ public partial class player_controller : Node3D
 		Vector3 velocity = PlayerRoot.LinearVelocity;
 		Vector3 platformVelocity = Vector3.Zero;
 
-		//float dist = hitPoint.DistanceTo(PlayerRoot.GlobalPosition);
-		//GD.Print(hitPoint);
-		//GD.Print(PlayerRoot.GlobalPosition);
+		GD.Print("---------------------------");
+		GD.Print("hitPoint = " + hitPoint);
+		GD.Print("Global Pos of Player = " + PlayerRoot.GlobalPosition);
 
 		float rayDirVel = downDir.Dot(velocity);
 		float x = dist - rideHeight;
-		//GD.Print("dist: " + dist);
-		//GD.Print("rideHeight: " + rideHeight);
-		//GD.Print("x: " + x);
+		GD.Print("dist: " + dist);
+		GD.Print("rideHeight: " + rideHeight);
+		GD.Print("x: " + x);
+		GD.Print("---------------------------");
 
 
 		float springForce =
