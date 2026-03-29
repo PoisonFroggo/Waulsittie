@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://muasqvoi8gtp"
-path.s3tc="res://.godot/imported/EclecticBtnIcon.jpg-de33dc2c12ee09ad7cb953dade9e9100.s3tc.ctex"
+uid="uid://csnnrws3l3rov"
+path.s3tc="res://.godot/imported/vole-gigachad_Skintexture.png-9386ed63ea7e6bc3046634e4a1cbcfc2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "d5712aee297b26f59d262a071ee220c8"
+}
 
 [deps]
 
-source_file="res://addons/barqueseclecticplugin/Icons/EclecticBtnIcon.jpg"
-dest_files=["res://.godot/imported/EclecticBtnIcon.jpg-de33dc2c12ee09ad7cb953dade9e9100.s3tc.ctex"]
+source_file="res://Models/vole-gigachad_Skintexture.png"
+dest_files=["res://.godot/imported/vole-gigachad_Skintexture.png-9386ed63ea7e6bc3046634e4a1cbcfc2.s3tc.ctex"]
 
 [params]
 

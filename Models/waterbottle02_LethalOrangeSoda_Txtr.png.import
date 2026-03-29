@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://muasqvoi8gtp"
-path.s3tc="res://.godot/imported/EclecticBtnIcon.jpg-de33dc2c12ee09ad7cb953dade9e9100.s3tc.ctex"
+uid="uid://026dg8kbm61p"
+path.s3tc="res://.godot/imported/waterbottle02_LethalOrangeSoda_Txtr.png-a8b7fffc0d454a7b9aab168b50899310.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "e9af92fc50b55b0e1b2d6ac8512945a5"
+}
 
 [deps]
 
-source_file="res://addons/barqueseclecticplugin/Icons/EclecticBtnIcon.jpg"
-dest_files=["res://.godot/imported/EclecticBtnIcon.jpg-de33dc2c12ee09ad7cb953dade9e9100.s3tc.ctex"]
+source_file="res://Models/waterbottle02_LethalOrangeSoda_Txtr.png"
+dest_files=["res://.godot/imported/waterbottle02_LethalOrangeSoda_Txtr.png-a8b7fffc0d454a7b9aab168b50899310.s3tc.ctex"]
 
 [params]
 

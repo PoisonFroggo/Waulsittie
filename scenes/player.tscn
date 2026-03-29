@@ -36,8 +36,8 @@ sky = SubResource("Sky_8753q")
 [node name="Player" type="Node3D" node_paths=PackedStringArray("AnimationPlayer", "Skel", "LeftLegLocation", "CameraNode", "InteractRay", "PlayerRoot", "GroundHeightCast", "footCol")]
 process_mode = 1
 script = ExtResource("1_o4d5i")
-Speed = 50.0
-JumpVelocity = 1500.0
+Speed = 20.0
+JumpVelocity = 1000.0
 AnimationPlayer = NodePath("PlayerRigidbody/PlayerCam/vole-gigachad/AnimationPlayer")
 KickAnimName = "KickAnim"
 Skel = NodePath("PlayerRigidbody/PlayerCam/vole-gigachad/Armature/Skeleton3D")
